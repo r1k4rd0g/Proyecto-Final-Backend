@@ -1,0 +1,38 @@
+[
+  {
+    "status": true,
+    "title": "Agua_Jane",
+    "description": "Agua Jane, 1.2 L. Limpia, desinfecta y blanquea",
+    "code": "r7891z",
+    "price": 150,
+    "stock": 10,
+    "category": "Producto de Limpieza",
+    "thumbnail": [
+      "https://discouy.vtexassets.com/arquivos/ids/1419680/AGUA-JANE-Antisplash-1-L-1.jpg?v=638296921167830000"
+    ]
+  },
+  {
+    "status": true,
+    "title": "Arroz",
+    "description": "Arroz Saman Blanco, 1kg",
+    "code": "e51qf",
+    "price": 87,
+    "stock": 22,
+    "category": "Alimentos",
+    "thumbnail": [
+      "https://geant.vtexassets.com/arquivos/ids/282097/523035.jpg?v=637656746433700000"
+    ]
+  },
+  {
+    "status": true,
+    "title": "Choclo en Lata",
+    "description": "Choclo Amarillo Entero - Arcor 300g",
+    "code": "e61qd",
+    "price": 45,
+    "stock": 22,
+    "category": "Alimentos",
+    "thumbnail": [
+      "https://prod-resize.tiendainglesa.com.uy/images/medium/P106237-1.jpg?20190729125546,Choclo-ARCOR-Amarillo-Cremoso-Lata-300gr-en-Tienda-Inglesa"
+    ]
+  }
+]

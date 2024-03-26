@@ -1,0 +1,172 @@
+paths:
+  /api/products:
+    post:
+      tags:
+        - Products
+      summary: Crea un producto un nuevo producto en la base de datos.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/parameters/schemas/bodyNewProduct'
+      responses:
+        201:
+          description: Devuelve en formato json, el producto creado.
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: '#/components/schema/Products/Create'
+        401:
+          description: No permite continuar debido a una falta de autorización relacionada con el rol del usuario.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schema/Products/VerifyRole'
+        404:
+          description: Error al crear el producto con los datos ingresados.
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: '#/components/schema/Products/ValidatorSchemaError'
+        500:
+          description: Error inesperado.
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: '#/components/schema/Products/ErrorCatch'
+      security:
+        - bearerAuth: []
+    get:
+      tags:
+        - Products
+      summary: Lista de todos los productos registrados en la base de datos.
+      parameters:
+        - in: query
+          name: page
+          description: número de página a visualizar.
+        - in: query
+          name: limit
+          required: true
+          description: número de productos a visualizar por pagina
+        - in: query
+          name: query
+          description: precio del producto buscado.
+        - in: query
+          name: category
+          description: categoria de productos a filtrar.
+        - in: query
+          name: sort
+          description: se ingresa entre 'asc' o 'desc' para que ordene la paginación.
+
+      responses:
+        200:
+          description: Solicitud realizada con éxito.
+          content:
+            application/json:
+              schema:
+                type: Array
+                $ref: '#/components/schema/Products/GetAllProducts'
+        401:
+          description: No permite continuar debido a una falta de autorización relacionada con el rol del usuario.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schema/Products/VerifyRole'
+        500:
+          description: Error inesperado.
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: '#/components/schema/Products/ErrorCatch'
+      security:
+        - bearerAuth: []
+  /api/products/{id}:
+    put:
+      tags:
+        - Products
+      summary: Actualiza un producto buscado por Id en la BD.
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: El id del producto a actualizar.
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/parameters/schemas/bodyUpdate'
+      responses:
+        200:
+          description: Se ha actualizado correctamente el producto y muestra el producto en un json.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schema/Products/Create'
+        401:
+          description: No permite continuar debido a una falta de autorización relacionada con el rol del usuario.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schema/Products/VerifyRole'
+        404:
+          description: No se encontró el producto que se quiere actualizar, con el Id suministrado.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schema/Products/NotFound'
+        500:
+          description: Error inesperado.
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: '#/components/schema/Products/ErrorCatch'
+      security:
+        - bearerAuth: []
+    delete:
+      tags:
+        - Products
+      summary: Elimina un producto buscado por Id en la BD.
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: El id del producto a eliminar.
+          schema:
+            type: string
+      responses:
+        200:
+          description: Se ha eliminado correctamente el producto y muestra el producto eliminado en un json.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schema/Products/Create'
+        401:
+          description: No permite continuar debido a una falta de autorización relacionada con el rol del usuario.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schema/Products/VerifyRole'
+        404:
+          description: No se encontró el producto que se quiere eliminar, con el Id suministrado.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schema/Products/NotFound'
+        500:
+          description: Error inesperado.
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: '#/components/schema/Products/ErrorCatch'
+      security:
+        - bearerAuth: []

@@ -1,0 +1,82 @@
+components:
+  parameters:
+    schemas:
+      bodyNewProduct:
+        type: object
+        summary: elementos necesarios para la creación de un nuevo producto.
+        required:
+        - title
+        - description
+        - code
+        - price
+        - stock
+        - category
+        properties:
+          title:
+            type: String
+            description: Nombre del producto.
+          description:
+            type: String
+            description: Características del producto.
+          code:
+            type: String
+            description: Código cargado manualmente.
+            unique: true
+          price:
+            type: Number
+            description: Precio del producto, debe ser un número mayor a 0.
+          stock:
+            type: Number
+            description: Cantidad de unidades disponibles para la comercialización, no puede ser número negativo.
+          category:
+            type: String
+            description: Categoría a la que pertence el producto.
+          thumbnail:
+            type: Array
+            items:
+              type: String
+            description: Imágenes del producto en formato de URL en formato Https.
+        example:
+          title: Lapicera Bic
+          description: Lapicera Bic Color Azul - La clásica lapicera, económica y versatil..
+          code: biclap123
+          price: 10
+          stock: 100
+          category: Articulos Escolares
+          thumbnail: ["https://f.fcdn.app/imgs/da73d7/suchinasa.com/suchuy/adc5/original/catalogo/5383_211_1/460x460/boligrafo-bic-cristal-x12-unidades-azul.jpg"]
+      bodyUpdate:
+        type: "object"
+        summary: elementos necesarios para la actualización de un producto.
+        properties:
+          title:
+            type: String
+            description: Nombre del producto.
+          description:
+            type: String
+            description: Características del producto.
+          code:
+            type: String
+            description: Código cargado manualmente.
+            unique: true
+          price:
+            type: Number
+            description: Precio del producto, debe ser un número mayor a 0
+          stock:
+            type: Number
+            description: Cantidad de unidades disponibles para la comercialización, no puede ser número negativo.
+          category:
+            type: String
+            description: Categoría a la que pertence el producto.
+          thumbnail:
+            type: Array
+            items:
+              type: String
+            description: Imágenes del producto en formato de URL en formato Https.
+        example:
+          title: Lapicera Bic
+          description: Lapicera Bic Color Azul - La clásica lapicera, económica y versatil..
+          code: biclap123
+          price: 12
+          stock: 500
+          category: Articulos Escolares
+          thumbnail: ["https://f.fcdn.app/imgs/da73d7/suchinasa.com/suchuy/adc5/original/catalogo/5383_211_1/460x460/boligrafo-bic-cristal-x12-unidades-azul.jpg"]

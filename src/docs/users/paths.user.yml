@@ -1,0 +1,27 @@
+paths:
+  /api/users/login:
+    post:
+      tags:
+        - Users
+      summary: Autenticación para acceder a la app
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/parameters/schemas/login'
+      responses:
+        200:
+          description: Devuelve algunos datos del usuario logueado.
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: '#/components/schema/Users/login'
+        500:
+          description: Error inesperado.
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: '#/components/schema/Users/ErrorCatch'
+

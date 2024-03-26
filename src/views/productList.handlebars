@@ -1,0 +1,50 @@
+<div class="divPrincipal">
+    <h1 class="h1Home">Lista de productos cargados hasta el momento</h1>
+    <h2>Bienvenido,<br>
+        Nombre: {{user.first_name}}<br>
+        Apellido: {{user.last_name}}<br>
+        Rol:{{user.role}}</h2>
+    <div class="botonBox">
+        <form class="form" action="/api/sessions/current" method="post">
+            <button id="perfil" type="submit">Perfil</button>
+        </form>
+        <form class="form" action="/api/product" method="post">
+            <button id="workWProduct">Work with product</button>
+        </form>
+        <form class="form" action="/api/users/logout" method="post">
+            <button type="submit">Cerrar sesión</button>
+        </form>
+    </div>
+    <div class="cartInfo">
+        <p>Total de productos: {{totalProducts}}</p>
+        <p>Total a pagar: ${{totalAmount}}</p>
+        <form class="form" action="" method="post" id="cartId" data-cart-id="{{user.cart}}">
+            <button id="crearTicket" type="submit">Crear ticket y pagar</button>
+        </form>
+    </div>
+    <div class="containerList" id="containerList">
+        <ul>
+            {{#each products}}
+            <li>
+                <strong>Titulo: </strong>{{this.title}}<br>
+                <strong>Price: </strong>{{this.price}}<br>
+                <strong>Description: </strong>{{this.description}}<br>
+                <strong>Category: </strong>{{this.category}}<br>
+                {{#if this.thumbnail}}
+                    {{#each this.thumbnail}}
+                    <div class="imgContainer">
+                        <img class="imgProduct" src="{{this}}" alt="{{this.title}}">
+                    </div>
+                    {{/each}}
+                {{/if}}
+                <form class="form addToCart" id={{this.id}}>
+                    <input type="number" name="quantity" value="0" min="0">
+                    <button type="submit">Agregar al carrito</button>
+                </form>
+            </li>
+            {{/each}}
+        </ul>
+    </div>
+    <!--acá se muestre la lista que contiene todos los productos hasta el momento. sería el json.-->
+</div>
+<script src="productlist.js" charset="utf-8"></script>

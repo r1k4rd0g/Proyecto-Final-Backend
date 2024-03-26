@@ -1,0 +1,20 @@
+components:
+  schema:
+    Users:
+      login:
+        type: object
+        description: login necesario para acceder a la app.
+        properties:
+          data:
+            type: String
+            description: token generado al ingresar el usuario.
+        example:
+          data: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWYwNjZhMWIxNDc1ZGE2YmMwZjA2ZGUiLCJpYXQiOjE3MTAyOTAxMjAsImV4cCI6MTcxMDI5MTMyMH0.gfKJD6Uz_R7M_hFhOpTmq0jcCajSEb6e5Hmiv4--0yc"
+      ErrorCatch:
+        type: object
+        description: Se produce cuando por problemas en el código o en el servidor, el error es tomado por el catch.
+        properties:
+          message:
+            description: error inesperado, entró en el catch del código.
+        example:
+          message: error inesperado, entró en el catch del código.

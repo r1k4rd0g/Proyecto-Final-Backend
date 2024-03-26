@@ -1,0 +1,42 @@
+<div class="divInicial">
+    <h1 class="h1Home">Lista de productos actualizados, utilizando Websockets</h1>
+    <div class="divForm">
+        <h2 class="titLista">Formulario para cargar productos:</h2>
+        <form method="post" class="form" id="add" action="/realtimeproducts">
+                <label for="Title"><strong>Titulo: </strong></label>
+                <input type="text" id="title" name="title"><br>
+                <label for="Description"><strong>Description: </strong></label>
+                <input type="text" id="description" name="description"><br>
+                <label for="Code"><strong>Code: </strong></label>
+                <input type="text" id="code" name="code"><br>
+                <label for="Price"><strong>Price: </strong></label>
+                <input type="number" id="price" name="price"><br>
+                <label for="Stock"><strong>Stock: </strong></label>
+                <input type="number" id="stock" name="stock"><br>
+                <label for="Category"><strong>Category: </strong></label>
+                <input type="text" id="category" name="category"><br>
+                <button type="submit" id="cargar">Cargar</button>
+        </form>
+    </div>
+        <div class="divForm">
+        <h2 class="titLista">Formulario para eliminar productos:</h2>
+        <form method="post" class="form" action="/realtimeproducts" id="eliminarForm" data-action="delete">
+                <label for="Id"><strong>Id: </strong></label>
+                <input type="number" id="idProduct" name="idProduct" required><br>
+                <button type="button" id="eliminar">Eliminar</button>
+        </form>
+    </div>
+    <h2 class="titLista">Lista actualizada post formulario:</h2>
+    <div class="divPrincipal">
+        <div class = "containerList" id="containerList">
+        </div>
+    <!--acá se muestre la lista que contiene todos los productos hasta el momento. sería el json.-->
+    </div><!--acá que se muestre la lista de productos más los que se agregarán. Tiene que trabajar con Socket y actualizar sola .-->
+</div>
+
+
+
+
+
+<script src="/socket.io/socket.io.js" charset="utf-8"></script>
+<script src="realTimeProducts.js" charset="utf-8"></script>

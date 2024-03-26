@@ -1,0 +1,4 @@
+fatal | 2024-03-04 19:00:35: logger fatal nivel 0
+error | 2024-03-04 19:00:35: logger error nivel 1
+warning | 2024-03-04 19:00:35: logger warning nivel 2
+info | 2024-03-04 19:00:35: logger info nivel 3

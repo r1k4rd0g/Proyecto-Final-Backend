@@ -1,0 +1,85 @@
+components:
+  schema:
+    Carts:
+      GetCart:
+        type: object
+        properties:
+          _id:
+            type: ObjectId
+            description: Id autogenerado por Mongo Data Base.
+          onCart:
+            type: Array
+            description: Nos muestra el id de los productos agregados junto con la cantidad de cada producto.
+            properties:
+              product:
+                type: ObjectId
+                description: Id del producto agregado al carrito.
+                ref: Product
+              quantity:
+                type: Number
+                description: Representa la cantidad del producto agregado al carrito.
+        example:
+          _id: ObjectId('65ed228104d3421ef285bd15')
+          onCart: [
+            {
+            product: ObjectId('65ec7ab639a870e34feed5fc'),
+            quantity: 2
+            }
+          ]
+      ValidatorSchemaError:
+        type: object
+        description: Se produce cuando los datos que se mandan en el body, no son correctos.
+        properties:
+          message:
+            description: error al crear el item con los datos ingresados.
+        example:
+          message: error al crear el item con los datos ingresados.
+      NotFound:
+        type: object
+        description: Error producido si no existe un item con el id proporcionado u otro elemento con el que se le busca.
+        properties:
+          message:
+            description: Error al buscar el item por el id u otro elemento.
+        example:
+          message: El item no existe en la base de datos.
+      ErrorGetById:
+        type: object
+        description: Se produce cuando el id no se encuentra en la base de datos.
+        properties:
+          message:
+            type: string
+            description: No se encontró el item con el id buscado en la base de datos.
+        example:
+          message: No se encontró el item con el id buscado en la base de datos.
+      ErrorCatch:
+        type: object
+        description: Se produce cuando por problemas en el código o en el servidor, el error es tomado por el catch.
+        properties:
+          message:
+            description: Error inesperado, entró en el catch del código.
+        example:
+          message: Error inesperado, entró en el catch del código.
+      VerifyRole:
+        type: object
+        description: Verifica que el rol del usuario, sea el autorizado para acceder a la ruta.
+        properties:
+          message:
+            description: No tienes autorización para continuar.
+        example:
+          message: No tienes autorización para continuar.
+      TicketGenerated:
+        type: object
+        description:  Muestra el formato del ticket que se genera a partir del carrito.
+        properties:
+          code:
+            type: string
+            description: Código asignado al ticket que se autogenera.
+          purchaseDataTime:
+            type: string
+            description: Fecha y hora en lla que se realizó el ticket.
+          amount:
+            type: number
+            description: total del monto a pagar.
+          purchaser:
+            type: string
+            description: datos del usuario que generó el ticket.

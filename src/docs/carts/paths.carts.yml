@@ -1,0 +1,171 @@
+paths:
+  /api/carts/{cid}:
+    get:
+      tags:
+        - Carts
+      summary: Obtiene el carrito buscado por Id.
+      parameters:
+        - in: path
+          name: cid
+          required: true
+          description: El id del carrito a buscar.
+      responses:
+        200:
+          description: Devuelve en formato json, un listado con opciones de paginación personalizadas.
+          content:
+            application/json:
+              type: object
+              $ref: '#/components/schema/Carts/GetCart'
+        400:
+          description: No se encontró el carrito con el id buscado.
+          content:
+            application/json:
+              type: object
+              $ref: '#/components/schema/Carts/ErrorGetById'
+        401:
+          description: Error al verificar el role. No se tiene autorización.
+          content:
+            application/json:
+              type: object
+              $ref: '#/components/schema/Carts/VerifyRole'
+        500:
+          description: Error interno del servidor, no se obtuvieron los productos.
+          content:
+            application/json:
+              type: object
+              $ref: '#/components/schema/Carts/ErrorCatch'
+      security:
+        - bearerAuth: []
+  /api/carts/{cid}/product/{pid}:
+    post:
+      tags:
+        - Carts
+      summary: Coloca un producto determinado dentro de un carrito determinado.
+      parameters:
+        - in: path
+          name: cid
+          required: true
+          description: El id del carrito a buscar.
+        - in: path
+          name: pid
+          required: true
+          description: El id del producto que se agregará al carrito.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/parameters/schemas/SaveProductToCart'
+      responses:
+        200:
+          description: Devuelve en formato json, el carrito con los productos agregados y su cantidad.
+          content:
+            application/json:
+              type: object
+              $ref: '#/components/schema/Carts/GetCart'
+        401:
+          description: Error al verificar el role. No se tiene autorización.
+          content:
+            application/json:
+              type: object
+              $ref: '#/components/schema/Carts/VerifyRole'
+        500:
+          description: Error interno del servidor, no se obtuvieron los productos.
+          content:
+            application/json:
+              type: object
+              $ref: '#/components/schema/Carts/ErrorCatch'
+      security:
+        - bearerAuth: []
+    delete:
+      tags:
+        - Carts
+      summary: Saca un producto determinado de un carrito determinado.
+      parameters:
+        - in: path
+          name: pid
+          required: true
+          description: El id del producto que se sacará del carrito.
+      responses:
+        200:
+          description: Devuelve en formato json, el carrito sin el producto removido.
+          content:
+            application/json:
+              type: object
+              $ref: '#/components/schema/Carts/GetCart'
+        401:
+          description: Error al verificar el role. No se tiene autorización.
+          content:
+            application/json:
+              type: object
+              $ref: '#/components/schema/Carts/VerifyRole'
+        500:
+          description: Error interno del servidor, no se obtuvieron los productos.
+          content:
+            application/json:
+              type: object
+              $ref: '#/components/schema/Carts/ErrorCatch'
+      security:
+        - bearerAuth: []
+  /api/carts/{cid}/purchase:
+    post:
+      tags:
+        - Carts
+      summary: Método que genera un ticket a partir de los productos ingresados en un carrito.
+      parameters:
+        - in: path
+          name: cid
+          required: true
+          description: El id del carrito al que se le hará el ticket.
+      responses:
+        200:
+          description: Devuelve en formato json, los datos del ticket generado.
+          content:
+            application/json:
+              type: object
+              $ref: '#/components/schema/Carts/TicketGenerated'
+        401:
+          description: Error al verificar el role. No se tiene autorización.
+          content:
+            application/json:
+              type: object
+              $ref: '#/components/schema/Carts/VerifyRole'
+        500:
+          description: Error interno del servidor, no se obtuvieron los productos.
+          content:
+            application/json:
+              type: object
+              $ref: '#/components/schema/Carts/ErrorCatch'
+      security:
+        - bearerAuth: []
+  /api/carts/clear/{cid}:
+    delete:
+      tags:
+        - Carts
+      summary: Método para vaciar el carrito.
+      parameters:
+        - in: path
+          name: cid
+          required: true
+          description: El id del carrito a vaciar
+      responses:
+        200:
+          description: Devuelve en formato json, el carrito vacío
+          content:
+            application/json:
+              type: object
+              $ref: '#/components/schema/Carts/GetCart'
+        401:
+          description: Error al verificar el role. No se tiene autorización.
+          content:
+            application/json:
+              type: object
+              $ref: '#/components/schema/Carts/VerifyRole'
+        500:
+          description: Error interno del servidor, no se obtuvieron los productos.
+          content:
+            application/json:
+              type: object
+              $ref: '#/components/schema/Carts/ErrorCatch'
+      security:
+        - bearerAuth: []

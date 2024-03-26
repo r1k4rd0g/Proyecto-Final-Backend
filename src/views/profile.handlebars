@@ -1,0 +1,9 @@
+<div>
+    <h2>Bienvenido {{user.email}}</h2><br>
+    <h3>Sus datos son los siguientes:</h3><br>
+    {{#each user}}
+        {{@key}}: {{this}}<br>
+    {{/each}}
+</div>
+<div><a href="/home">Home</a></div>
+

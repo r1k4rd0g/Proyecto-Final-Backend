@@ -1,0 +1,11 @@
+MONGO_URL='mongodb+srv://r1k4rd0g:S41ntr0w2023@coderhouse.gkusrdv.mongodb.net/ecommerce'
+PORT=8088
+PERSISTENCE="MONGO"
+SECRET_KEY_JWT=C0d3r
+CLIENTID = "Iv1.4bd7f92440eecbc2"
+CLIENTSECRET = "630c1746089da2e6fcac8ea358b494738a422ad2"
+NODE_ENV = "develop"
+EMAIL = r1k4rd0g@gmail.com
+PASSWORD = rfuc gtpn puty xptr
+NAME = CODER-BACKEND
+HOST = smtp.gmail.com

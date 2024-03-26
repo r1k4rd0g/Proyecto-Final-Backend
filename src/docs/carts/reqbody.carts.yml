@@ -1,0 +1,14 @@
+components:
+  parameters:
+    schemas:
+      SaveProductToCart:
+        type:
+        summary: Se especifica la cantidad del producto identificado en params, que se agregará al carrito.
+        required: true
+        properties:
+          quantity::
+            type: number
+            description: Cantidad de unidades que se desean agregar al carrito, del producto identificado en params.
+        example:
+          quantity: 1
+

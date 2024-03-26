@@ -1,0 +1,159 @@
+components:
+  schema:
+    Products:
+      Create:
+        type: object
+        description: Esquema de respuesta al crear un nuevo producto.
+        properties:
+          _id:
+            type: ObjectId
+            description: Id autogenerado por Mongo Data Base.
+          title:
+            type: String
+            description: Nombre del producto asignado.
+            index: true
+          description:
+            type: String
+            description: Características del producto asignadas.
+          code:
+            type: String
+            description: Código cargado manualmente.
+          price:
+            type: Number
+            description: Precio del producto, el cual será mayor a 0.
+          stock:
+            type: Number
+            description: Cantidad de unidades disponibles para la comercialización, la cual será mayor a 0.
+          category:
+            type: String
+            description: Categoría a la que pertence el producto.
+          thumbnail:
+            type: Array
+            items:
+              type: String
+            description: Imágenes del producto.
+          owner:
+            type: String
+            description: Quién cargó el producto a la base de datos, es un elemento asignado automáticamente por el sistema.
+            default: admin
+        example:
+          _id: ObjectId('65ec7ab639a870e34feed5fc')
+          title: Lapicera
+          description: Lapicera Bic
+          code: biclap123
+          price: 10
+          stock: 100
+          category: Articulos Escolares
+          thumbnail:
+            [
+              "https://f.fcdn.app/imgs/da73d7/suchinasa.com/suchuy/adc5/original/catalogo/5383_211_1/460x460/boligrafo-bic-cristal-x12-unidades-azul.jpg",
+            ]
+          owner: admin
+      GetAllProducts:
+        type: Array
+        description: Devuelve todos los productos existentes en la base de datos.
+        properties:
+          _id:
+            type: ObjectId
+            description: Id autogenerado por Mongo Data Base.
+          title:
+            type: String
+            description: Nombre del producto asignado.
+            index: true
+          description:
+            type: String
+            description: Características del producto asignadas.
+          code:
+            type: String
+            description: Código cargado manualmente.
+          price:
+            type: Number
+            description: Precio del producto, el cual será mayor a 0
+          stock:
+            type: Number
+            description: Cantidad de unidades disponibles para la comercialización, la cual será mayor a 0.
+          category:
+            type: String
+            description: Categoría a la que pertence el producto.
+          thumbnail:
+            type: Array
+            items:
+              type: String
+            description: Imágenes del producto.
+          owner:
+            type: String
+            description: Quién cargó el producto a la base de datos, es un elemento asignado automáticamente por el sistema.
+            default: admin
+        example:
+          items:
+            [
+              {
+                _id: ObjectId('65ec7ab639a870e34feed5fc'),
+                title: Lapicera,
+                description: Lapicera Bic,
+                code: biclap123,
+                price: 10,
+                stock: 100,
+                category: Articulos Escolares,
+                thumbnail:
+                  [
+                    "https://f.fcdn.app/imgs/da73d7/suchinasa.com/suchuy/adc5/original/catalogo/5383_211_1/460x460/boligrafo-bic-cristal-x12-unidades-azul.jpg",
+                  ],
+                owner: admin,
+              },
+              {
+                _id: ObjectId('65ec7ab639a870e34feed5fc'),
+                title: Lapicera,
+                description: Lapicera Bic,
+                code: biclap123,
+                price: 10,
+                stock: 100,
+                category: Articulos Escolares,
+                thumbnail:
+                  [
+                    "https://f.fcdn.app/imgs/da73d7/suchinasa.com/suchuy/adc5/original/catalogo/5383_211_1/460x460/boligrafo-bic-cristal-x12-unidades-azul.jpg",
+                  ],
+                owner: admin,
+              },
+            ]
+      ValidatorSchemaError:
+        type: object
+        description: Se produce cuando los datos que se mandan en el body, no son correctos
+        properties:
+          message:
+            description: error al crear el item con los datos ingresados.
+        example:
+          message: error al crear el item con los datos ingresados.
+      NotFound:
+        type: object
+        description: Error producido si no existe un item con el id proporcionado u otro elemento con el que se le busca.
+        properties:
+          message:
+            description: Error al buscar el item por el id u otro elemento.
+        example:
+          message: El item no existe en la base de datos.
+      ErrorGetById:
+        type: object
+        description: Se produce cuando el id no se encuentra en la base de datos
+        properties:
+          message:
+            type: string
+            description: No se encontró el item con el id buscado en la base de datos.
+        example:
+          message: No se encontró el item con el id buscado en la base de datos.
+      ErrorCatch:
+        type: object
+        description: Se produce cuando por problemas en el código o en el servidor, el error es tomado por el catch.
+        properties:
+          message:
+            description: Error inesperado, entró en el catch del código.
+        example:
+          message: Error inesperado, entró en el catch del código.
+      VerifyRole:
+        type: object
+        description: Verifica que el rol del usuario, sea el autorizado para acceder a la ruta.
+        properties:
+          message:
+            description: No tienes autorización para continuar.
+        example:
+          message: No tienes autorización para continuar.
