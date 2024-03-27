@@ -3,6 +3,7 @@ import './passport/local-strategy.js'
 import 'dotenv/config';
 import express from 'express';
 import morgan from 'morgan';
+import path from 'path'
 import {__dirname} from './utils.js';
 import { errorHandler } from '../src/middlewares/errorHandler.js';
 import { Server } from 'socket.io';
@@ -43,7 +44,7 @@ app.use(passport.session());
 //y van antes del enrutador, lineas de abajo.
 /* ------------------------------------ - ----------------------------------- */
 
-app.set('views', __dirname + '/views');
+app.set('views', path.join(__dirname , '/views'));
 app.set('view engine', 'handlebars');
 
 
