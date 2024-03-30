@@ -5,6 +5,7 @@ export default class UserResDTO{
         this.Apellido = user.last_name;
         this.Email = user.email;
         this.Rol = user.role;
+        this.Id = user._id
     }
 }
 

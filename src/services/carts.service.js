@@ -10,25 +10,24 @@ class CartService extends Services {
         super(persistence.cartDao);
         this.productDao = persistence.productDao
     }
-    saveProductToCart = async (cid, pid, quantity, id) => {
+    saveProductToCart = async (cid, pid, quantity, roleUser) => {
         try {
             //console.log('que llega del controller en service?: cid: ',cid , 'pid: ', pid, 'quantity: ', quantity ,'id de cliente: ', id) //llega todo ok
             const productSearch = await this.productDao.getById(pid);
             console.log('productSearch: ', productSearch)
             if (!productSearch) {
-                console.log('owner', productSearch.owner)
-                return httpResponse.NotFound('no se encontró carrito')
+                return httpResponse.NotFound('no se encontró el producto')
             }
-            if (id === productSearch.owner) {
+            if (roleUser === productSearch.owner) {
                 //console.log('consola linea 36 cart services',productSearch)
-                return false;//httpResponse.Unauthorized('No puedes agregar productos creados por ti al }carrito')
+                return httpResponse.Unauthorized('No puedes agregar productos creados por ti al }carrito')
             }else {
                 const cartUpdate = await this.dao.saveProductToCart(cid, pid, quantity);
                 if (!cartUpdate) {
                     console.log(cartUpdate)
                     return false; //httpResponse.NotFound('no se encontró carrito')
-                }
-            } return cartUpdate
+                } return cartUpdate
+            }
             //console.log('cid que llega al cartsService', cid)
             //console.log(`carrito buscado en carts.service con id: ${cid}, no encontrado`);
             //console.log('consola linea 41 cart services', cartUpdate)

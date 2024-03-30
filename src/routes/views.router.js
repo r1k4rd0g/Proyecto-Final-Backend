@@ -13,9 +13,9 @@ router.get('/home', (req, res) => {
 //esta vista muestra los productos de lista, más el nombre de usuario y más:
 router.get('/productlist', productController.getAllSimple);
 
-router.get('/productlist', (req, res) => {
+/*router.get('/productlist', (req, res) => {
     res.render('productlist', { user: req.session.passport.user }, { products: productsDetail })
-})
+})*/
 
 router.get('/register', (req, res) => {
     res.render('register');
@@ -26,7 +26,7 @@ router.get('/register-success', (req, res) => {
 
 router.get('/realtimeproducts', verifyRole, productController.getProductsRealTime);
 
-router.post('/realtimeproducts', productController.createProductsRealTime);
+router.post('/realtimeproducts', verifyRole, productController.createProductsRealTime);
 
 router.get('/registererror', (req, res) => {
     res.render('registererror')

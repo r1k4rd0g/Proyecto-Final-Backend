@@ -1,6 +1,8 @@
 import UserResDTO from "../dto/user.res.dto.js";
 import persistence from '../daos/factory.js'
 import { errorsDictionary } from "../../utils/errors.dictionary.js";
+import logger from "../../utils/logger/logger.winston.js";
+
 
 class UserRepository {
     constructor(){
@@ -10,7 +12,7 @@ class UserRepository {
         try {
             //console.log('id de consola userRepository:', id)
             const user = await this.dao.getById(id);
-            //console.log('user de consola userRepository:', user)
+            logger.info('user de consola userRepository :' + user)
         if(!user) return false;
         //console.log(`no se encontró usuario buscado por id ${id}`)
         else return new UserResDTO(user);

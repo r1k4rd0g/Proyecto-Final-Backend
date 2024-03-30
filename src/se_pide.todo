@@ -391,6 +391,17 @@
                   "focus": false,
                   "end": 1710453249674
                 }
+              },
+              {
+                "key": 1711648578760,
+                "children": [],
+                "todo": {
+                  "content": "Cambiar el endpoint de getAll products, que está mal. llama a get all simple",
+                  "id": 1711648578760,
+                  "level": "default",
+                  "done": false,
+                  "start": 1711648578760
+                }
               }
             ],
             "todo": {
@@ -440,6 +451,6 @@
     "showEndTime": false,
     "simpleMode": false,
     "lang": "es",
-    "version": "1711147619396"
+    "version": "1711648829261"
   }
 }

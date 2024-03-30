@@ -1,9 +1,35 @@
 <div>
-    <h2>Bienvenido {{user.email}}</h2><br>
+    <h2>Bienvenido: {{user.Email}}</h2><br>
     <h3>Sus datos son los siguientes:</h3><br>
-    {{#each user}}
-        {{@key}}: {{this}}<br>
-    {{/each}}
+    Nombre: {{user.Nombre}}<br>
+    Apellido: {{user.Apellido}}<br>
+    Email: {{user.Email}}<br>
+    Rol: {{user.Rol}}<br>
+<div id="userData" data-user-id="{{user.Id}}" style="display: inline;"></div>
 </div>
-<div><a href="/home">Home</a></div>
+<div><a href="/productlist">Volver Atrás</a></div>
 
+<div>
+    <h2>Aquí puede actualizar sus datos:</h2>
+    <form id="updateForm" action="/premium/{user.id}" method="POST">
+        <label for="first_name">Nombre:</label>
+        <input type="text" id="first_name" name="first_name"><br>
+        <label for="last_name">Apellidos:</label>
+        <input type="text" id="last_name" name="last_name"><br>
+        <label for="age">Edad:</label>
+        <input type="number" id="age" name="age"><br>
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email"><br>
+        <label for="password">Contraseña:</label>
+        <input type="password" id="password" name="password"><br>
+        <label for="role">Rol:</label>
+        <select name="role" id="role" >
+            <option value="">Seleccionar un rol</option>
+            <option value="User">Usuario</option>
+            <option value="Premium">Premium</option>
+        </select><br>
+        <button type="submit">Actualizar Datos</button>
+    </form>
+</div>
+
+<script src="userUpdate.js" charset="utf-8"></script>

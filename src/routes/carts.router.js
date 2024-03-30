@@ -17,7 +17,7 @@ router.get('/:cid', verifyUser, cartController.getById);
 //crea un carrito:
 //router.post('/', cartController.create); // inhabilitado por no uso
 
-router.post('/:cid/product/:pid', cartController.saveProductToCart);
+router.post('/:cid/product/:pid', verifyUser, cartController.saveProductToCart);
 
 //elimina el carrito por id seleccionado.
 //router.delete('/:cid', cartController.removeCartById);

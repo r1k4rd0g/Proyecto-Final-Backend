@@ -21,8 +21,9 @@ export default class CartMongoDao extends MongoDao {
             } else {
                 cart.onCart.push({ product: pid, quantity: quantity || 1 });
             }
-            cart.save();
-            return cart;
+            const cartSave = await cart.save();
+            logger.info('carrito actualizado con productos ' + cartSave)
+            return cartSave;
             //return await CartModel.findByIdAndUpdate();
         } catch (error) {
             logger.error('entró en el catch mongodb - carts.dao - saveProductToCart: ' + error)

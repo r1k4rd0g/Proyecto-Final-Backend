@@ -17,8 +17,10 @@ class SessionController extends Controllers {
             const id = userLog._id
             logger.debug('id buscado de userLog'+ id)
             const user = await userRepository.getUserById(id);
-            logger.info('user de dto en sessions.controller'+ user);
+            //console.log('consola user de profileResponse', user) //el dato llega modificado
             req.session.passport.dto = user;
+            //se guarda modificado?
+            console.log('consola 23 user session dto', req.session.passport.dto)
             res.json(user);
             //res.render('profile', {user: user});
             //return user

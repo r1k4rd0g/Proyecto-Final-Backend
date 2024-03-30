@@ -105,8 +105,8 @@ class ProductController extends Controllers {
             const userLog = req.session.passport.user
             logger.info('userLog de products controller' + userLog)
             logger.error(userLog + 'error de userLog')
-            //res.render('productlist', { products: productsDetail, user: userLog })
-            res.json({ products: productsDetail, user: userLog })
+            res.render('productlist', { products: productsDetail, user: userLog })
+            //res.json({ products: productsDetail, user: userLog })
         } catch (error) {
             logger.error('Entró al catch en products.controller de getAllSimple' + error)
             next(error)
