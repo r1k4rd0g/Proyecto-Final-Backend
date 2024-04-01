@@ -15,14 +15,16 @@
                 <input type="number" id="stock" name="stock"><br>
                 <label for="Category"><strong>Category: </strong></label>
                 <input type="text" id="category" name="category"><br>
-                <button type="submit" id="cargar">Cargar</button>
+                <label for="Thumbnail"><strong>Image URL (optional): </strong></label>
+                <input type="text" id="thumbnail" name="thumbnail" placeholder="Ingrese las URLs separadas por una coma" style="height: 100px;"></textarea><br>
+                <button type="submit" id="cargar">Enviar</button>
         </form>
     </div>
         <div class="divForm">
         <h2 class="titLista">Formulario para eliminar productos:</h2>
         <form method="post" class="form" action="/realtimeproducts" id="eliminarForm" data-action="delete">
                 <label for="Id"><strong>Id: </strong></label>
-                <input type="number" id="idProduct" name="idProduct" required><br>
+                <input type="text" id="idProduct" name="idProduct" required><br>
                 <button type="button" id="eliminar">Eliminar</button>
         </form>
     </div>

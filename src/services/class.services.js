@@ -1,71 +1,75 @@
 import { errorsDictionary } from "../utils/errors.dictionary.js";
 import logger from '../utils/logger/logger.winston.js'
 export default class Services {
-    constructor(dao){
+    constructor(dao) {
         this.dao = dao;
     }
 
     //funciones simples:
 
     //busca todos los items:
-    getAll = async ()=>{
+    getAll = async () => {
         try {
             return await this.dao.getAll();
         } catch (error) {
             logger.error('entró en el catch - class.service - getAll: ' + error)
-            throw new Error (error.message, errorsDictionary.ERROR_TO_GET);
+            throw new Error(error.message, errorsDictionary.ERROR_TO_GET);
         }
     };
     //busca un item por id específico:
-    getById = async (id)=>{
+    getById = async (id) => {
         try {
             //logger.info('consola getById de class.services que muestra el id que viene desde controllers:' + id)
             const itemSearch = await this.dao.getById(id);
             //console.log('itemSearch en class.service', itemSearch);
-            if(!itemSearch) return false, console.log(`no se encontró item buscado por id ${id}`);
+            if (!itemSearch) return false, console.log(`no se encontró item buscado por id ${id}`);
             else return itemSearch;
         } catch (error) {
             logger.error('entró en el catch - class.service - getById: ' + error)
-            throw new Error (error.message, errorsDictionary.ERROR_TO_FIND);
+            throw new Error(error.message, errorsDictionary.ERROR_TO_FIND);
         }
     };
     //crea un item:
-    create = async (obj)=>{
+    create = async (obj) => {
         try {
             const newItem = await this.dao.create(obj);
-            if(!newItem) return false;
+            if (!newItem) return false;
             //console.log("item no creado, consola create class.service");
             else return newItem;
         } catch (error) {
             logger.error('entró en el catch - class.service - create: ' + error)
-            throw new Error (error.message, errorsDictionary.ERROR_TO_CREATE);
+            throw new Error(error.message, errorsDictionary.ERROR_TO_CREATE);
         }
     };
 
     //actualizar un item:
-    update = async (id, obj) =>{
+    update = async (id, obj) => {
         try {
             console.log('datos que llegan al class.services - update: ', id, obj)
             const itemSearch = await this.dao.getById(id);
-            if(!itemSearch) return false;
+            if (!itemSearch) return false;
             //console.log (`item con id: ${id} no encontrado, consola update de class.service`);
             const itemUpdate = await this.dao.update(id, obj);
             return itemUpdate
         } catch (error) {
             logger.error('entró en el catch - class.service - update: ' + error)
-            throw new Error (error.message, errorsDictionary.ERROR_TO_UPDATE);
+            throw new Error(error.message, errorsDictionary.ERROR_TO_UPDATE);
         }
     };
     //borrar un item:
-    delete = async (id) =>{
+    delete = async (id) => {
         try {
-            const itemDelete = await this.dao.delete(id);
-            if(!itemDelete) return false;
-            logger.info('no se encontró item buscado por id ' + id)
-            return itemDelete;
+            console.log('id que llega al class service para se borrado', id)
+            const itemSearch = await this.dao.getById(id);
+            if (!itemSearch) {
+                logger.info('no se encontró item buscado por id ' + id)
+            } else {
+                const itemDelete = await this.dao.delete(id);
+                return itemDelete;
+            }
         } catch (error) {
             logger.error('entró en el catch - class.service - delete: ' + error)
-            throw new Error (error.message, errorsDictionary.ERROR_TO_REMOVE);
+            throw new Error(error.message, errorsDictionary.ERROR_TO_REMOVE);
         }
     }
 

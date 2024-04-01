@@ -130,13 +130,13 @@ class ProductController extends Controllers {
             const user = req.session.passport.user;
             const rol = req.session.passport.user.role;
             const id = user._id;
-            const owner = rol === 'premium' ? id : 'admin'
+            const owner = rol === 'Premium' ? id : 'admin' //si el usuario tiene rol premium, se le asigna el id del mismo
             const newProduct = { title, description, code, price, stock, category, thumbnail, owner }
             const productCreated = await productService.create(newProduct);
             logger.info('productCreated en products.controller: ' + productCreated)
-            const allProducts = await productService.getAllSimple()
-            socketServer.emit('products', allProducts)
-            return res.status(201).json(productCreated);
+            const products = await productService.getAllSimple()
+            socketServer.emit('products', products)
+            return productCreated;
         } catch (error) {
             logger.error('Entró al catch en products.controller de createProductsRealTime' + error)
             next(error);

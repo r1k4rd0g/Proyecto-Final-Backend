@@ -337,8 +337,23 @@
                   "content": "Si es premium, no puedo agregar al carrito, un producto creado por él.",
                   "id": 1709943282026,
                   "level": "default",
-                  "done": false,
-                  "start": 1709943282026
+                  "done": true,
+                  "start": 1709943282026,
+                  "focus": false,
+                  "end": 1712006924332
+                }
+              },
+              {
+                "key": 1711840047115,
+                "children": [],
+                "todo": {
+                  "content": "Cambiar el rol del usuario basico a premium. por medio de una interfaz que actualice los datos de user.",
+                  "id": 1711840047115,
+                  "level": "default",
+                  "done": true,
+                  "start": 1711840047115,
+                  "focus": false,
+                  "end": 1711840072691
                 }
               }
             ],
@@ -451,6 +466,6 @@
     "showEndTime": false,
     "simpleMode": false,
     "lang": "es",
-    "version": "1711648829261"
+    "version": "1712006924431"
   }
 }

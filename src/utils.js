@@ -31,12 +31,12 @@ export const createResponse = (res, statusCode, data)=>{
 }
 
 /*-cookie -*/
-
+//tiempo de registro de session:
 const connectionURL = config.MONGO_URL;
 export const mongoStoreOptions ={
     store: MongoStore.create({
         mongoUrl: connectionURL,
-        ttl: 180,
+        ttl: 900,
         crypto:{
             secret : '1234'
         }
@@ -45,7 +45,7 @@ export const mongoStoreOptions ={
     resave: false,
     saveUninitialized: false,
     cookie: {
-        maxAge: 180000,
+        maxAge: 900000,
         secure: false,
         httpOnly: true
     }

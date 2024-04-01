@@ -4,14 +4,11 @@ import { verifyAdmin, verifyRole } from '../middlewares/verifyRole.js';
 
 const router = Router();
 
-router.get('/', verifyAdmin, productController.getAllCtr);
+router.get('/', verifyRole, productController.getAllCtr);
 
 //router.get('/:id', productController.getById);
 
-router.post('/', verifyAdmin, productController.create);
-
-//crear los productos desde un file --->
-//router.post('/file', productController.createFileProductCtr)
+router.post('/', verifyRole, productController.create);
 
 router.put('/:id', verifyRole, productController.update);
 

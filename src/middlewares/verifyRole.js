@@ -43,7 +43,7 @@ export const verifyRole = (req, res, next) => {
                 logger.info('rol de verifyAdmin' + role);
                 next();
                 break;
-            case 'premium':
+            case 'Premium':
                 logger.info('rol de verifyUser' + role);
                 next();
                 break;
@@ -64,7 +64,7 @@ export const verifyRole2 = (req, res, next) => {
                 logger.info('rol de verifyAdmin' + role);
                 next();
                 break;
-            case 'premium':
+            case 'Premium':
                 logger.info('rol de verifyUser' + role);
                 next();
                 break;

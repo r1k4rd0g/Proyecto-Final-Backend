@@ -35,10 +35,10 @@ document.addEventListener("DOMContentLoaded", function () {
     forms.forEach(form => {
         form.addEventListener('submit', async function (e) {
             e.preventDefault();
-                const productId = form.getAttribute('id')
-                console.log(productId, 'productId')
-                //const productIdElement = form.querySelector('.productId');
-                //const productId = productIdElement.getAttribute('data-product-id');
+            const productId = form.getAttribute('id')
+            console.log(productId, 'productId')
+            //const productIdElement = form.querySelector('.productId');
+            //const productId = productIdElement.getAttribute('data-product-id');
             console.log('product id: ', productId, 'cart id:', cartId);
             const quantity = parseInt(form.querySelector("input[name='quantity']").value);
             const response = await fetch(`/api/carts/${cartId}/product/${productId}`, {
@@ -48,27 +48,29 @@ document.addEventListener("DOMContentLoaded", function () {
                 },
                 body: JSON.stringify({ quantity })
             });
-            if (response.ok) {
-                const result = await response.json();
-                console.log('producto agregado al carrito:', result);
-                alert('producto agregado al carrito con éxito');
+            console.log('respuesta: ', response)
+            if (response.status === 200) {
+                console.log('producto agregado al carrito:',);
+                alert('Producto agregado al carrito con éxito');
+            } else if (response.status == 403 || false || null) {
+                alert('No puedes agregar un producto creado por tí al carrito.')
             } else {
-                console.log('error al agregar el producto al carrito');
+                alert('Error al agregar el producto al carrito o no tienes permisos para hacerlo');
             }
         });
     });
 });
 
 /** Creación del ticket */
-crearTicket.onclick = (e) =>{
+crearTicket.onclick = (e) => {
     e.preventDefault();
     const response = fetch(`/api/carts/${cartId}/purchase`, {
-        method:"POST",
+        method: "POST",
         headers: {
             'Content-Type': 'application/json'
         },
     })
-    if(response.ok){
-        window.location.href= '/ticket';
+    if (response.ok) {
+        window.location.href = '/ticket';
     }
 }

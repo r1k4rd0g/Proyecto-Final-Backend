@@ -10,29 +10,28 @@ class CartService extends Services {
         super(persistence.cartDao);
         this.productDao = persistence.productDao
     }
-    saveProductToCart = async (cid, pid, quantity, roleUser) => {
+    saveProductToCart = async (cid, pid, quantity, idUser) => {
         try {
             //console.log('que llega del controller en service?: cid: ',cid , 'pid: ', pid, 'quantity: ', quantity ,'id de cliente: ', id) //llega todo ok
+            const userId = idUser
             const productSearch = await this.productDao.getById(pid);
-            console.log('productSearch: ', productSearch)
+            console.log('productSearch linea 17: ', productSearch)
             if (!productSearch) {
-                return httpResponse.NotFound('no se encontró el producto')
+                return { success: false, message: 'No se encontró el producto' }//httpResponse.NotFound(res,'no se encontró el producto')
             }
-            if (roleUser === productSearch.owner) {
-                //console.log('consola linea 36 cart services',productSearch)
-                return httpResponse.Unauthorized('No puedes agregar productos creados por ti al }carrito')
+            console.log('id user que viene de controller:',idUser)
+            console.log('productSearch.owner', productSearch.owner)
+            if (userId === productSearch.owner) {
+                return false //{success: false, message: 'No puedes agregar productos creados por ti al carrito'} //httpResponse.Unauthorized(res, 'No puedes agregar productos creados por ti al }carrito')
             }else {
                 const cartUpdate = await this.dao.saveProductToCart(cid, pid, quantity);
                 if (!cartUpdate) {
                     console.log(cartUpdate)
-                    return false; //httpResponse.NotFound('no se encontró carrito')
-                } return cartUpdate
+                    return { success: false, message: 'No se encontró el carrito' };;// httpResponse.NotFound('no se encontró carrito')
+                } return { success: true, cartUpdate };
             }
-            //console.log('cid que llega al cartsService', cid)
-            //console.log(`carrito buscado en carts.service con id: ${cid}, no encontrado`);
-            //console.log('consola linea 41 cart services', cartUpdate)
         } catch (error) {
-            //logger.error('entró en el catch - carts.service - saveProductToCart: ' + error)
+            logger.error('entró en el catch - carts.service - saveProductToCart: ' + error)
             throw new Error (error.message, errorsDictionary.ERROR_ADD_TO_CART);
         }
     };
