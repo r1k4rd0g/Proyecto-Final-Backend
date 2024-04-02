@@ -14,18 +14,19 @@ class TicketService extends Services {
     }
     generateTicket = async (cid, userData) => {
         try {
-            logger.info('cart id en ticket.services' + cid) //ok
+            //logger.info('1 - id del carrito en ticket.services: ' + cid) //ok
             const cart = await this.cartDao.getById(cid)
-            //console.log('cart que viene del dao buscado:', cart) //ok
+            //logger.info('3 - cart que viene del dao buscado: ' + cart) //ok
             let amountAcc = 0;
             for (const p of cart.onCart) {
                 const pid = p.product._id.toString();
                 const productData = await this.productDao.getById(pid)
-                if (p.quantity <= productData.Stock) {
-                    const amount = p.quantity * productData.Price;
+                if (p.quantity <= productData.stock) {
+                    const amount = p.quantity * productData.price;
                     amountAcc += amount;
-                    productData.Stock -= p.quantity;
-                    const stockUpdate = await this.productDao.update(pid, productData.Stock);
+                    productData.stock -= p.quantity;
+                    const stockUpdate = await this.productDao.update(pid, productData.stock);
+                    console.log(stockUpdate, 'stock update')
                 } else {
                     return false
                 }
@@ -39,7 +40,7 @@ class TicketService extends Services {
             });
             cart.onCart = [];
             cart.save();
-            //console.log('ticket creado?:', newTicket)d
+            logger.info('ticket generado en servicio: ', newTicket)
             return newTicket;
         } catch (error) {
             logger.error('entró en el catch - ticket.service - generateTicket: ' + error)

@@ -40,11 +40,11 @@ export const verifyRole = (req, res, next) => {
         const { role } = req.session.passport.user;
         switch (role) {
             case 'admin':
-                logger.info('rol de verifyAdmin' + role);
+                logger.info('rol de verifyAdmin: ' + role);
                 next();
                 break;
             case 'Premium':
-                logger.info('rol de verifyUser' + role);
+                logger.info('rol de verifyUser: ' + role);
                 next();
                 break;
             default:
@@ -61,11 +61,11 @@ export const verifyRole2 = (req, res, next) => {
         const { role } = req.session.passport.user;
         switch (role) {
             case 'usuario':
-                logger.info('rol de verifyAdmin' + role);
+                logger.info('rol de verifyAdmin: ' + role);
                 next();
                 break;
             case 'Premium':
-                logger.info('rol de verifyUser' + role);
+                logger.info('rol de verifyUser: ' + role);
                 next();
                 break;
             default:

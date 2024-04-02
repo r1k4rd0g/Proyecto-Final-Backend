@@ -3,6 +3,7 @@ import persistence from '../persistence/daos/factory.js';
 import Services from './class.services.js';
 import { errorsDictionary } from '../utils/errors.dictionary.js';
 import httpResponse from '../utils/http.response.js';
+import logger from '../utils/logger/logger.winston.js';
 
 
 class CartService extends Services {
@@ -15,27 +16,38 @@ class CartService extends Services {
             //console.log('que llega del controller en service?: cid: ',cid , 'pid: ', pid, 'quantity: ', quantity ,'id de cliente: ', id) //llega todo ok
             const userId = idUser
             const productSearch = await this.productDao.getById(pid);
-            console.log('productSearch linea 17: ', productSearch)
+            //console.log('productSearch linea 17: ', productSearch)
             if (!productSearch) {
-                return { success: false, message: 'No se encontró el producto' }//httpResponse.NotFound(res,'no se encontró el producto')
+                return { success: false, message: 'No se encontró el producto' }
             }
-            console.log('id user que viene de controller:',idUser)
-            console.log('productSearch.owner', productSearch.owner)
+            //console.log('id user que viene de controller:', idUser)
+            //console.log('productSearch.owner', productSearch.owner)
             if (userId === productSearch.owner) {
-                return false //{success: false, message: 'No puedes agregar productos creados por ti al carrito'} //httpResponse.Unauthorized(res, 'No puedes agregar productos creados por ti al }carrito')
-            }else {
+                return { success: false, message: 'No puedes agregar productos creados por ti al carrito' }
+            } else {
                 const cartUpdate = await this.dao.saveProductToCart(cid, pid, quantity);
+                console.log('consola de servicio que muestra el carrito actualizado: ' + cartUpdate)
                 if (!cartUpdate) {
-                    console.log(cartUpdate)
-                    return { success: false, message: 'No se encontró el carrito' };;// httpResponse.NotFound('no se encontró carrito')
-                } return { success: true, cartUpdate };
+                    return { success: false, message: 'No se encontró el carrito' };
+                }
+                let totalProducts = 0;
+                cartUpdate.onCart.forEach(product =>{
+                    totalProducts +=  product.quantity;
+                })
+                let totalPrice = 0;
+                for (const product of cartUpdate.onCart){
+                    const productData = await this.productDao.getById(product.product._id);
+                    totalPrice += productData.price * product.quantity;
+                }
+                console.log('total products: ', totalProducts)
+                console.log('total price: ', totalPrice)
+                return { success: true, cartUpdate, totalProducts, totalPrice };
             }
         } catch (error) {
             logger.error('entró en el catch - carts.service - saveProductToCart: ' + error)
-            throw new Error (error.message, errorsDictionary.ERROR_ADD_TO_CART);
+            throw new Error(error.message, errorsDictionary.ERROR_ADD_TO_CART);
         }
     };
-
     removeCartById = async (cid) => {
         try {
             const cartRemove = await this.dao.delete(cid)

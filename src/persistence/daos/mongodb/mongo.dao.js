@@ -20,8 +20,10 @@ export default class MongoDao {
 
     async getById(id){
         try {
-            //console.log('id en consola mongo dao:', id)
-            const response = await this.model.findById(id);
+            const IdItemSearch = id
+            //logger.info('id en consola mongo dao:' + IdItemSearch)
+            const response = await this.model.findById(IdItemSearch);
+            //logger.info('respuesta del id buscado en dao: ' + response)
             return response;
         } catch (error) {
             logger.error('entró en el catch mongodb - mongo.dao - getById: ' + error)
@@ -42,8 +44,9 @@ export default class MongoDao {
 
     async update (id, obj) {
         try {
-            await this.model.updateOne({_id: id}, obj); //actualiza una solo.
-            return obj
+            const response= await this.model.updateOne({_id: id}, obj);
+            logger.info('respuesta de update dao: ', + response) //actualiza una solo.
+            return response
         } catch (error) {
             logger.error('entró en el catch mongodb - mongo.dao - update: ' + error)
             throw new Error (error.message, errorsDictionary.ERROR_TO_UPDATE);

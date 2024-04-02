@@ -10,9 +10,9 @@ export default class CartMongoDao extends MongoDao {
 
     async saveProductToCart(cid, pid, quantity) {
         try {
-            logger.info('viene de service, carts.dao - saveProduct - cid ' + cid)
+            //logger.info('viene de service, carts.dao - saveProduct - cid ' + cid)
             const cart = await CartModel.findById(cid).populate('onCart.product');
-            console.log('consola linea 35 cart dao', cart, 'id de product:', pid)
+            //console.log('consola linea 35 cart dao', cart, 'id de product:', pid)
             if (!cart) logger.info('no existe el carrito');
             const productExist = cart.onCart.find(item => item.product._id.toString() === pid);
             if (productExist) {
@@ -22,9 +22,8 @@ export default class CartMongoDao extends MongoDao {
                 cart.onCart.push({ product: pid, quantity: quantity || 1 });
             }
             const cartSave = await cart.save();
-            logger.info('carrito actualizado con productos ' + cartSave)
+            //logger.info('carrito actualizado con productos ' + cartSave)
             return cartSave;
-            //return await CartModel.findByIdAndUpdate();
         } catch (error) {
             logger.error('entró en el catch mongodb - carts.dao - saveProductToCart: ' + error)
             throw new Error(error.message, errorsDictionary.ERROR_ADD_TO_CART);

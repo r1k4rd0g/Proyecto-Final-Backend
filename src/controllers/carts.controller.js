@@ -17,13 +17,13 @@ class CartController extends Controllers {
             const { pid, cid } = req.params
             const userLog = req.session.passport.user;
             const idUser = userLog._id
-            console.log('consola id de usuario', idUser)
+            //console.log('consola id de usuario', idUser)
             logger.info('consola id de usuario: ' + idUser)
             //logger.info('quantity del carrito' + typeof(quantity) +' '+ quantity)
             //logger.info('id del carrito ' + typeof(cid)+' ' + cid)
             //logger.info('id del cliente '+ id)
             const updateCart = await cartService.saveProductToCart(cid, pid, quantity, idUser);
-            logger.info('carrito actualizado: ' + updateCart);
+            logger.info('carrito actualizado: ' + JSON.stringify(updateCart));
             if (!updateCart || null || false ) {return httpResponse.Forbidden(res, 'forbidden')}
             else {return res.status(200).json(updateCart);}
         } catch (error) {

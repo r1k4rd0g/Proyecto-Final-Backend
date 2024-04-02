@@ -30,7 +30,7 @@ router.delete('/:cid/product/:pid', verifyRole2, cartController.removeProductByI
 router.delete('/clear/:cid', verifyUser, cartController.clearCart)
 
 //genera el ticket:
-router.post('/:cid/purchase', verifyUser, ticketController.generateTicket)
+router.post('/:cid/purchase', verifyRole2, ticketController.generateTicket)
 
 
 export default router;

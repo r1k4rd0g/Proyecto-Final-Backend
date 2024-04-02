@@ -50,8 +50,14 @@ document.addEventListener("DOMContentLoaded", function () {
             });
             console.log('respuesta: ', response)
             if (response.status === 200) {
+                const result = await response.json();
                 console.log('producto agregado al carrito:',);
                 alert('Producto agregado al carrito con éxito');
+                const cartInfo = document.querySelector('.cartInfo');
+                const totalProductsElement = cartInfo.querySelector('#totalProducts');
+                const totalAmountElement = cartInfo.querySelector('#totalAmount');
+                totalProductsElement.textContent = result.totalProducts;
+                totalAmountElement.textContent = result.totalPrice;
             } else if (response.status == 403 || false || null) {
                 alert('No puedes agregar un producto creado por tí al carrito.')
             } else {
@@ -62,15 +68,18 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 /** Creación del ticket */
-crearTicket.onclick = (e) => {
+crearTicket.onclick = async (e) => {
     e.preventDefault();
-    const response = fetch(`/api/carts/${cartId}/purchase`, {
+    const response = await fetch(`/api/carts/${cartId}/purchase`, {
         method: "POST",
         headers: {
             'Content-Type': 'application/json'
         },
-    })
-    if (response.ok) {
+    });
+    console.log('respuesta desde el back ', response)
+    if (response.status === 200) {
+        alert('Ticket generado y enviado con éxito.')
         window.location.href = '/ticket';
-    }
+    } else (response.status == 500 || 403)
+    alert('Ticket no generado, no tienes permisos o hay un error')
 }

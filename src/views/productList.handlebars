@@ -16,8 +16,8 @@
         </form>
     </div>
     <div class="cartInfo">
-        <p>Total de productos: {{totalProducts}}</p>
-        <p>Total a pagar: ${{totalAmount}}</p>
+        <p>Total de productos: <span id="totalProducts">{{totalProducts}}</span></p>
+        <p>Total a pagar: $<span id="totalAmount">{{totalPrice}}</span></p>
         <form class="form" action="" method="post" id="cartId" data-cart-id="{{user.cart}}">
             <button id="crearTicket" type="submit">Crear ticket y pagar</button>
         </form>
@@ -31,11 +31,11 @@
                 <strong>Description: </strong>{{this.description}}<br>
                 <strong>Category: </strong>{{this.category}}<br>
                 {{#if this.thumbnail}}
-                    {{#each this.thumbnail}}
-                    <div class="imgContainer">
-                        <img class="imgProduct" src="{{this}}" alt="{{this.title}}">
-                    </div>
-                    {{/each}}
+                {{#each this.thumbnail}}
+                <div class="imgContainer">
+                    <img class="imgProduct" src="{{this}}" alt="{{this.title}}">
+                </div>
+                {{/each}}
                 {{/if}}
                 <form class="form addToCart" id={{this.id}}>
                     <input type="number" name="quantity" value="0" min="0">
