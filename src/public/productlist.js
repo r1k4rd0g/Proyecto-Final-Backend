@@ -16,12 +16,21 @@ profile.onclick = (e) => {
             'Authorization': `Bearer ${token}`
         },
         cookie: { 'Authorization': `Bearer ${token}` }
-    }).then((response) => response.json()) //console.log(response, 'response 1'))
-        .then((response) => {
-            console.log(response); //DATOS DEL USUARIO
+    }).then((response) => {
+        if (response.status === 200) {
+            const result = response.json()
+            console.log('verifica los datos del  usuario logueado', result);
             window.location.href = "/profile";
-        })
-};
+        } else {
+            alert('No hay token habilitado, o no tienes acceso por el rol');
+        }
+    }).catch((error) => {
+        alert('Ocurrió un error al obtener la información', error)
+    });
+
+
+}
+
 
 workWProduct.onclick = (e) => {
     e.preventDefault();
@@ -49,9 +58,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 body: JSON.stringify({ quantity })
             });
             console.log('respuesta: ', response)
-            if (response.status === 200) {
+            if (response.ok) {
                 const result = await response.json();
-                console.log('producto agregado al carrito:',);
                 alert('Producto agregado al carrito con éxito');
                 const cartInfo = document.querySelector('.cartInfo');
                 const totalProductsElement = cartInfo.querySelector('#totalProducts');

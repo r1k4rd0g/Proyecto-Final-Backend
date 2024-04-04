@@ -34,8 +34,9 @@ export default class Services {
         try {
             const newItem = await this.dao.create(obj);
             if (!newItem) return false;
+            //console.log('item creado: ', newItem);
             //console.log("item no creado, consola create class.service");
-            else return newItem;
+            return newItem;
         } catch (error) {
             logger.error('entró en el catch - class.service - create: ' + error)
             throw new Error(error.message, errorsDictionary.ERROR_TO_CREATE);

@@ -84,6 +84,22 @@ class ProductService extends Services {
             throw new Error(error.message, errorsDictionary.ERROR_TO_GET);
         }
     };
+    removeByOwner = async (id) => {
+        try {
+            console.log('id que llega al class service para se borrado', id)
+            const itemSearch = await this.dao.getById(id);
+            if (!itemSearch) {
+                logger.info('no se encontró item buscado por id ' + id)
+            } else {
+                const itemDelete = await this.dao.delete(id);
+                return itemDelete;
+            }
+        } catch (error) {
+            logger.error('entró en el catch - class.service - delete: ' + error)
+            throw new Error(error.message, errorsDictionary.ERROR_TO_REMOVE);
+        }
+    }
+
     /**generadores faker */
     createMockingProducts = async (cant) => {
         try {
@@ -99,6 +115,7 @@ class ProductService extends Services {
             throw new Error(error.message, errorsDictionary.ERROR_TO_CREATE);
         }
     }
+
     getMockingProducts = async (cant) => {
         try {
             const products = await this.createMockingProducts(cant)
@@ -108,24 +125,7 @@ class ProductService extends Services {
             throw new Error(error.message, errorsDictionary.ERROR_TO_GET);
         }
     }
-    /*productsFile = JSON.parse(
-        fs.readFileSync('../persistence/daos/filesystem/data/products.json', 'utf-8')
-    );
-
-    // crea los productos desde el archivo .json:
-    createFileProduct = async () => {
-        try {
-            const createdProducts = [];
-            for (const product of productsFile) {
-                const newProduct = await this.dao.create(product)
-                createdProducts.push(newProduct);
-            }
-            return { message: "productos del archivo cargados" }
-        } catch (error) {
-            throw new Error(error)
-        }
-    }*/
-    //removeById
 }
+
 const productService = new ProductService(persistence.productDao);
 export default productService;

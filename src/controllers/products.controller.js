@@ -2,7 +2,6 @@
 import Controllers from "./class.controller.js";
 //importamos Service específico:
 import productService from "../services/product.service.js";
-import socketServer from '../app.js';
 import httpResponse from "../utils/http.response.js";
 import logger from "../utils/logger/logger.winston.js";
 import productRepository from "../persistence/repository/product.repository.js";
@@ -76,7 +75,7 @@ class ProductController extends Controllers {
     remove = async (req, res, next) => {
         try {
             const { id } = req.params;
-            logger.info( 'id recibido del params ' + id)
+            logger.info('id recibido del params ' + id)
             const deletedProduct = await productService.delete(id);
             if (!deletedProduct) {
                 return res.status(400).json({ messages: `error al eliminar el producto con id: ${id}` })
@@ -103,8 +102,7 @@ class ProductController extends Controllers {
                 }
             })
             const userLog = req.session.passport.user
-            logger.info('userLog de products controller' + userLog)
-            logger.error(userLog + 'error de userLog')
+            logger.info('userLog de products controller' + JSON.stringify(userLog))
             res.render('productlist', { products: productsDetail, user: userLog })
             //res.json({ products: productsDetail, user: userLog })
         } catch (error) {
@@ -124,9 +122,8 @@ class ProductController extends Controllers {
     }
     createProductsRealTime = async (req, res, next) => {
         try {
-            //const newProduct = req.body
             const { title, description, code, price, stock, category, thumbnail } = req.body;
-            logger.info('EJemplo de lo que llega del body' + title)
+            logger.info('EJemplo de lo que llega del body: ' + title)
             const user = req.session.passport.user;
             const rol = req.session.passport.user.role;
             const id = user._id;
@@ -134,9 +131,10 @@ class ProductController extends Controllers {
             const newProduct = { title, description, code, price, stock, category, thumbnail, owner }
             const productCreated = await productService.create(newProduct);
             logger.info('productCreated en products.controller: ' + productCreated)
-            const products = await productService.getAllSimple()
-            socketServer.emit('products', products)
-            return productCreated;
+            if (!productCreated || null || false) { return httpResponse.Forbidden(res, 'forbidden') }
+            console.log('respuesta de back: ', productCreated)
+            const response = httpResponse.Ok(res, productCreated);
+            return response
         } catch (error) {
             logger.error('Entró al catch en products.controller de createProductsRealTime' + error)
             next(error);
@@ -153,16 +151,7 @@ class ProductController extends Controllers {
             next(error);
         }
     }
-    /**generadores faker */
-    /*createProductsMocking = async (req, res, next) =>{
-        try {
-            const {cant} = req.query
-            const response = await productService.createMockingProducts(cant);
-            return httpResponse.Ok(res, response)
-        } catch (error) {
-            next(error);
-        }
-    }*/
+
     getProductsMocking = async (req, res, next) => {
         try {
             const { cant } = req.body
@@ -174,15 +163,6 @@ class ProductController extends Controllers {
             next(error);
         }
     }
-    /*createFileProductCtr = async (req, res, next) => {
-        try {
-            const newProducts = await productService.createFileProduct();
-            if (!newProducts) throw new Error("validation error");
-            return res.status(201).send('Archivo creado correctamente');
-        } catch (error) {
-            next(error)
-        }
-    }*/
 }
 const productController = new ProductController();
 export default productController;

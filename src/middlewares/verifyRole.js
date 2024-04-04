@@ -40,11 +40,11 @@ export const verifyRole = (req, res, next) => {
         const { role } = req.session.passport.user;
         switch (role) {
             case 'admin':
-                logger.info('rol de verifyAdmin: ' + role);
+                logger.info('rol de verifyRole1: ' + role);
                 next();
                 break;
             case 'Premium':
-                logger.info('rol de verifyUser: ' + role);
+                logger.info('rol de verifyRole1: ' + role);
                 next();
                 break;
             default:
@@ -59,16 +59,18 @@ export const verifyRole = (req, res, next) => {
 export const verifyRole2 = (req, res, next) => {
     try {
         const { role } = req.session.passport.user;
+        logger.info('rol de usuario de verifyRole2: ' + role)
         switch (role) {
             case 'usuario':
-                logger.info('rol de verifyAdmin: ' + role);
+                logger.info('rol de verifyRole2: ' + role);
                 next();
                 break;
             case 'Premium':
-                logger.info('rol de verifyUser: ' + role);
+                logger.info('rol de verifyRole2: ' + role);
                 next();
                 break;
             default:
+                logger.info('rol no esperado, entró en default: ' + role)
                 return httpResponse.Unauthorized(res, errorsDictionary.ERROR_VERIFY_ROLE);
         }
     } catch (error) {

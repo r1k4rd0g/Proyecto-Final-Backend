@@ -8,11 +8,11 @@ router.get('/', verifyRole, productController.getAllCtr);
 
 //router.get('/:id', productController.getById);
 
-router.post('/', verifyRole, productController.create);
+router.post('/', verifyRole, productController.createProductsRealTime);
 
 router.put('/:id', verifyRole, productController.update);
 
-router.delete('/:id', verifyAdmin, productController.remove);
+router.delete('/:id', verifyRole, productController.remove);
 
 //router.post('/mockingproducts', productController.createProductsMocking)
 router.get('/mockingproducts', verifyAdmin, productController.getProductsMocking)
