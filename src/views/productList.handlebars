@@ -3,7 +3,9 @@
     <h2>Bienvenido,<br>
         Nombre: {{user.first_name}}<br>
         Apellido: {{user.last_name}}<br>
-        Rol:{{user.role}}</h2>
+        Rol: {{user.role}}
+        <div id="userData" data-user-id="{{user._id}}" style="display: inline;"></div>
+    </h2>
     <div class="botonBox">
         <form class="form" action="/api/sessions/current" method="post">
             <button id="perfil" type="submit">Perfil</button>

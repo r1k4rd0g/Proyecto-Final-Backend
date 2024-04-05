@@ -27,10 +27,13 @@ profile.onclick = (e) => {
     }).catch((error) => {
         alert('Ocurrió un error al obtener la información', error)
     });
-
-
 }
-
+document.addEventListener("DOMContentLoaded", function () {
+    const userId = document.getElementById('userData').getAttribute('data-user-id');
+    //const userId = "{{user._id}}"; // Lee el userId de la vista
+    console.log('user id que llega del back: ', userId)
+    localStorage.setItem('userId', userId); // Guarda el userId en el localStorage
+});
 
 workWProduct.onclick = (e) => {
     e.preventDefault();

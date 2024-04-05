@@ -5,6 +5,7 @@ import persistence from '../persistence/daos/factory.js';
 import { errorsDictionary } from '../utils/errors.dictionary.js';
 import { __dirname } from '../utils.js';
 import { generateProducts } from '../utils/faker/products.faker.js';
+
 import logger from '../utils/logger/logger.winston.js'
 import fs from 'fs'
 
@@ -13,6 +14,7 @@ import fs from 'fs'
 class ProductService extends Services {
     constructor() {
         super(persistence.productDao)
+        this.userDao = persistence.userDao
     }
 
     getAllPaginate = async (
@@ -84,18 +86,30 @@ class ProductService extends Services {
             throw new Error(error.message, errorsDictionary.ERROR_TO_GET);
         }
     };
-    removeByOwner = async (id) => {
+    removeByOwner = async (pId, userId) => {
         try {
-            console.log('id que llega al class service para se borrado', id)
-            const itemSearch = await this.dao.getById(id);
-            if (!itemSearch) {
-                logger.info('no se encontró item buscado por id ' + id)
-            } else {
-                const itemDelete = await this.dao.delete(id);
-                return itemDelete;
+            const idUser = userId
+            console.log('user id: ', idUser)
+            logger.info('datos que llegan desde socket: ' + pId + ' ' + userId)
+            const user = await this.userDao.getById(idUser);
+            console.log('usuario encontrado: ',  user)
+            if (!user) {
+                return false
+            }
+            const roleUser = user.role
+            const productSearch = await this.dao.getById(pId);
+            if(!productSearch) return false
+            const owner = productSearch.owner
+            console.log('owner del producto: ', owner)
+            if (roleUser === 'admin' || owner === userId) {
+                const productDelete = await this.dao.delete(pId)
+                return productDelete
+            }
+            else {
+                return false
             }
         } catch (error) {
-            logger.error('entró en el catch - class.service - delete: ' + error)
+            logger.error('entró en el catch - product.service - delete: ' + error)
             throw new Error(error.message, errorsDictionary.ERROR_TO_REMOVE);
         }
     }

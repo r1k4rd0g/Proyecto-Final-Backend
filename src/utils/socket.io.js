@@ -13,13 +13,17 @@ const initSocket = (httpServer) => {
         socket.on('deleteProduct', async (data) => {
             try {
                 console.log('dato que llega al socket', data)
-                const id = data.data
-                logger.info('id a eliminar por socket.io --> on: ' + id);
-                const productDelete = await productService.delete(id);
+                const pId = data.idToDelete;
+                const userId = data.userId;
+                logger.info('id a eliminar por socket.io --> on: ' + pId);
+                console.log('usuario desde front: ', userId)
+                const productDelete = await productService.removeByOwner(pId, userId);
                 if (!productDelete) {
+                    socket.emit('productDeleted', {message: 'Error al eliminar el producto, no tienes permisos o no se encontró '})
                     logger.error('no se pudo borrar el producto')
                 } else {
                     const products = await productService.getAllSimple();
+                    socket.emit('productDeleted', {message: 'Producto eliminado correctamente '})
                     socketServer.emit('products', products);
                 };
                 //console.log('consola 3 app.js:', products);

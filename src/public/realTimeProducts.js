@@ -9,10 +9,11 @@ const idProduct = document.getElementById('idProduct')
 
 btnEliminar.addEventListener('click', () => {
     const action = document.getElementById('eliminarForm').getAttribute('data-action');
+    const userId = localStorage.getItem('userId');
     if (action === 'delete') {
         const idToDelete = idProduct.value
         console.log('producto a eliminar: ', idToDelete)
-        socket.emit('deleteProduct', { data: idToDelete });
+        socket.emit('deleteProduct', { idToDelete: idToDelete, userId: userId});
         cleanForm2()
     }
 });
@@ -66,9 +67,6 @@ document.getElementById('add').addEventListener('submit', async (e) => {
 })
 
 
-
-
-//esto solo actualiza la vista que está debajo de los formularios en la pag con el nombre realtimeproducts, cuando se completa el diálogo entre socket, ahí recién actualiza
 socket.on('products', (products) => {
     console.log(JSON.stringify(products))
     let infoProducts = '';
@@ -92,6 +90,10 @@ socket.on('products', (products) => {
     productsList.innerHTML = infoProducts
     console.log(productsList);
     //products.innerHTML = '</ul>';
+});
+
+socket.on('productDeleted', (data) => {
+        alert(data.message);
 });
 
 function cleanForm1() {
