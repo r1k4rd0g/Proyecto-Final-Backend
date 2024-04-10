@@ -59,9 +59,8 @@ class UserService extends Services {
                 const passValid = isValidPass(password, userExist);
                 if (!passValid) return false;
                 else {
-                    //const token = generateToken(userExist);
-                    //console.log('consola login user service que genera token:', token)
-                    //userExist.token = token;
+                    userExist.last_connection = new Date();
+                    await userExist.save();
                     return userExist
                 }
             }
@@ -81,6 +80,24 @@ class UserService extends Services {
         } catch (error) {
             logger.error('entró en el catch - users.service - getByEmail: ' + error)
             throw new Error (error.message, errorsDictionary.ERROR_TO_GET);
+        }
+    }
+
+    logout = async(userId) =>{
+        try {
+            const id = userId
+            console.log('id del services logout: ', id)
+            const userExist = await this.dao.getById(id)
+            console.log('userExiste del services logout: ', userExist)
+            if(!userExist) return false;
+            else {
+                userExist.last_connection = new Date();
+                await userExist.save();
+                return userExist
+            }
+        } catch (error) {
+            logger.error('entró en el catch - users.service - logout: ' + error)
+            throw new Error (error.message, errorsDictionary.ERROR_DEFAULT);
         }
     }
 }

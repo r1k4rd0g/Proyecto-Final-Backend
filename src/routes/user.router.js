@@ -38,3 +38,9 @@ export default router;
 
 //ruta para actualizar el role de un usuario:
 router.put('/premium/:id', verifyToken, userController.update)
+
+//ruta para solicitar nueva contraseña
+//router.post('/reset-pass', userController.resetPass)
+
+//ruta para actualizar contraseña
+//router.put('/new-pass', userController.newPass)

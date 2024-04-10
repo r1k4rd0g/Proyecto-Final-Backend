@@ -438,6 +438,46 @@
               "done": false,
               "start": 1710099642510
             }
+          },
+          {
+            "key": 1712772622117,
+            "children": [
+              {
+                "key": 1712772636568,
+                "children": [],
+                "todo": {
+                  "content": "debe modificarse cuando el usuario hace login",
+                  "id": 1712772636568,
+                  "level": "default",
+                  "done": true,
+                  "start": 1712772636568,
+                  "focus": false,
+                  "end": 1712772661830
+                }
+              },
+              {
+                "key": 1712772650872,
+                "children": [],
+                "todo": {
+                  "content": "debe modificarse cuando el usuario hace logout",
+                  "id": 1712772650872,
+                  "level": "default",
+                  "done": true,
+                  "start": 1712772650873,
+                  "focus": false,
+                  "end": 1712772662364
+                }
+              }
+            ],
+            "todo": {
+              "content": "Crear una propiedad llamada last_connection",
+              "id": 1712772622117,
+              "level": "default",
+              "done": true,
+              "start": 1712772622117,
+              "focus": false,
+              "end": 1712772660603
+            }
           }
         ],
         "todo": {
@@ -459,10 +499,7 @@
       1709754983052,
       1709755009104,
       1709755100741,
-      1709755138780,
-      1709755266261,
       1709755375297,
-      1709943152297,
       1709943207220,
       1710099642510,
       1709754966232,
@@ -479,6 +516,6 @@
     "showEndTime": false,
     "simpleMode": false,
     "lang": "es",
-    "version": "1712343107444"
+    "version": "1712772663939"
   }
 }

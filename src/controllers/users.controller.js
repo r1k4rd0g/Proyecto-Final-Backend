@@ -14,12 +14,12 @@ class UserController extends Controllers {
     register = async (req, res, next) => {
         try {
             const userData = req.body
-            logger.info('user.controller - register - userData: '+ userData);
+            logger.info('user.controller - register - userData: ' + userData);
             const user = await usersServices.createUser(userData)
             if (user) res.redirect("/home");
             else res.redirect("/registererror")
         } catch (error) {
-            logger.error('Entró al catch en users.controller de register'+ error)
+            logger.error('Entró al catch en users.controller de register' + error)
             next(error);
         }
     }
@@ -52,16 +52,34 @@ class UserController extends Controllers {
             next(error)
         }
     }
-    logout = (req, res, next) => {
+    logout = async (req, res, next) => {
         try {
-            req.session.destroy((err) => {
-                if (err) {
-                    logger.fatal('Error en user.controller - logout if(error):' + err);
-                    return res.redirect('/error');
-                }
-                res.clearCookie('connect.sid');
-                res.redirect("/home");
-            });
+            const userId = req.session.passport.user._id
+            console.log('data de logout: ', userId)
+            const userUpdate = await usersServices.logout(userId);
+            if (!userUpdate) {
+                return res.status(401).send({ message: "Error al cerrar sesión" })
+            } else {
+                const destroySession = () => new Promise((resolve, reject) => {
+                    req.session.destroy((error) => {
+                        if (error) {
+                            logger.fatal('Error en user.controler - logout if(error): ' + error);
+                            reject(error);
+                        }
+                        resolve();
+                    });
+                });
+                destroySession()
+                    .then(async () => {
+                        res.clearCookie('connect.sid')
+                        res.redirect('/home')
+                    })
+                    .catch((error) => {
+                        logger.error('Error al destruir la sesión: ' + error);
+                        return res.redirect('/error')
+                    })
+            }
+
         } catch (error) {
             logger.error('Entró al catch en users.controller de logout' + error)
             next(error)

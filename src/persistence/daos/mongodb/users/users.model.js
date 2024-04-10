@@ -35,6 +35,10 @@ export const userSchema = new Schema({
     cart: {
         type: Schema.Types.ObjectId, //esto guarda el id del carrito de compras a la cual pertenece un usuario
         ref: CartModel
+    },
+    last_connection: {
+        type: Date,
+        default: null,
     }
 })
 
