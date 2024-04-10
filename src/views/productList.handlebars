@@ -1,4 +1,4 @@
-<div class="divPrincipal">
+{{!< main}} <div class="divPrincipal">
     <h1 class="h1Home">Lista de productos cargados hasta el momento</h1>
     <h2>Bienvenido,<br>
         Nombre: {{user.first_name}}<br>
@@ -29,6 +29,18 @@
             <button id="crearTicket" type="submit">Crear ticket y pagar</button>
         </form>
     </div>
+    <div class="botonBox">
+        <input type="number" id="pageNumber" value="1" min="1">
+        <input type="number" id="limit" value="" >
+        <input type="text" id="categoryFilter" placeholder="Filtrar por categoría">
+        <input type="checkbox" id="existFilter" value="yes"> Stock?
+        <input type="number" id="priceMin" placeholder="Precio mínimo">
+        <input type="number" id="priceMax" placeholder="Precio máximo">
+    </div>
+    <div>
+        <button id="prevPage">Página anterior</button>
+        <button id="nextPage">Página siguiente</button>
+    </div>
     <div class="containerList" id="containerList">
         <ul>
             {{#each products}}
@@ -52,6 +64,13 @@
             {{/each}}
         </ul>
     </div>
+    <div id="productList">
+
+    </div>
+    <div class="botonBox">
+        <button id="prevPage">Página anterior</button>
+        <button id="nextPage">Página siguiente</button>
+    </div>
     <!--acá se muestre la lista que contiene todos los productos hasta el momento. sería el json.-->
-</div>
-<script src="productlist.js" charset="utf-8"></script>
+    </div>
+    <script src="productlist.js" charset="utf-8"></script>

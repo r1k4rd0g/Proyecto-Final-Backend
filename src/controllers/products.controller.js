@@ -14,9 +14,16 @@ class ProductController extends Controllers {
     }
     getAllCtr = async (req, res, next) => {
         try {
+            /**
+            // - limit: es la cantidad de productos que se van a mostrar
+            // - page: número de pag que queremos buscar
+            // - query: tipo de elemento a buscar
+            // - sort : muestra los precios asc o desc
+             */
             const { page, limit, query, sort, category, exist } = req.query;
-            const pageNumber = parseInt(page) || 1;
-            const pageSize = parseInt(limit) || 10;
+            console.log ('limit:' , limit)
+            const pageNumber = parseInt(page) || '1';
+            const pageSize = parseInt(limit) || '10';
             const searchQuery = query || '';
             const sortOrder = (sort === 'asc' || sort === 'desc') ? sort : '';
             let priceFilter = null;
@@ -29,7 +36,7 @@ class ProductController extends Controllers {
                 category || '',
                 exist || '',
                 priceFilter);
-            logger.info(typeof (pageSize) + 'console 1: pageSize' + limit)
+            logger.info(typeof (pageSize) + ' logger info 1: pageSize ' + limit)
             //logger.info('console 2:' + searchQuery);
             //logger.info(typeof(sortOrder) + 'console 3:'+ sortOrder);
             const prevPage = response.prevPage;
@@ -37,7 +44,7 @@ class ProductController extends Controllers {
             const prevLink = response.hasPrevPage ? `http://localhost:8088/api/products/?page=${prevPage}&limit=${pageSize}&query=${searchQuery}&sort=${sortOrder}` : null;
             const nextLink = response.hasNextPage ? `http://localhost:8088/api/products/?page=${nextPage}&limit=${pageSize}&query=${searchQuery}&sort=${sortOrder}` : null;
             const status = 'success';
-            res.json({
+            return res.json({
                 status,
                 response,
                 products: response.docs,

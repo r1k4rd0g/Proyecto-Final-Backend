@@ -78,6 +78,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 
+
 /** Creación del ticket */
 crearTicket.onclick = async (e) => {
     e.preventDefault();
@@ -94,3 +95,61 @@ crearTicket.onclick = async (e) => {
     } else (response.status == 500 || 403)
     alert('Ticket no generado, no tienes permisos o hay un error')
 }
+
+// Script para manejar la interacción con el backend
+const productList = document.getElementById('productList');
+const prevPageBtn = document.getElementById('prevPage');
+const nextPageBtn = document.getElementById('nextPage');
+const pageNumberInput = document.getElementById('pageNumber');
+const limitToSee = document.getElementById('limit')
+const categoryFilter = document.getElementById('categoryFilter');
+const existFilter = document.getElementById('existFilter');
+const priceMin = document.getElementById('priceMin');
+const priceMax = document.getElementById('priceMax');
+
+async function fetchData(page, limit, category, exist, priceMinValue, priceMaxValue) {
+    // Realizar una solicitud al backend con los parámetros necesarios
+    const response = await fetch(`/api/products?page=${page}&limit=${limit}&category=${category}&exist=${exist}&priceMin=${priceMinValue}&priceMax=${priceMaxValue}`);
+    const data = await response.json();
+    return data.products;
+}
+
+async function updateProductList() {
+    const page = parseInt(pageNumberInput.value);
+    const limit = parseInt(limitToSee.value);
+    const category = categoryFilter.value;
+    const exist = existFilter.checked ? 'yes' : '';
+    const priceMinValue = parseInt(priceMin.value) || '';
+    const priceMaxValue = parseInt(priceMax.value) || '';
+    console.log('limit ', limit)
+    const products = await fetchData(page, limit, category, exist, priceMinValue, priceMaxValue);
+
+
+    // Limpiar la lista de productos y agregar los nuevos productos
+    productList.innerHTML = '';
+    products.forEach(product => {
+        const li = document.createElement('li');
+        li.textContent = `${product.title} - ${product.price}`;
+        productList.appendChild(li);
+    });
+}
+
+// Eventos para los controles de paginación
+prevPageBtn.addEventListener('click', () => {
+    pageNumberInput.value = Math.max(parseInt(pageNumberInput.value) - 1, 1);
+    updateProductList();
+});
+
+nextPageBtn.addEventListener('click', () => {
+    pageNumberInput.value = parseInt(pageNumberInput.value) + 1;
+    updateProductList();
+});
+
+// Eventos para los filtros
+categoryFilter.addEventListener('change', updateProductList);
+existFilter.addEventListener('change', updateProductList);
+priceMin.addEventListener('change', updateProductList);
+priceMax.addEventListener('change', updateProductList);
+
+// Cargar la lista de productos al cargar la página
+updateProductList();

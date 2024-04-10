@@ -213,8 +213,10 @@
                   "content": "un usuario premium, solo borre los productos que le pertenecen",
                   "id": 1709755280623,
                   "level": "default",
-                  "done": false,
-                  "start": 1709755280623
+                  "done": true,
+                  "start": 1709755280623,
+                  "focus": false,
+                  "end": 1712283766454
                 }
               },
               {
@@ -224,10 +226,10 @@
                   "content": "el admin puede borrar cualquier producto, hasta el del owner",
                   "id": 1709755302520,
                   "level": "default",
-                  "done": false,
+                  "done": true,
                   "start": 1709755302520,
                   "focus": false,
-                  "end": 1709958746621
+                  "end": 1712283768720
                 }
               }
             ],
@@ -235,8 +237,10 @@
               "content": "Modificar los permisos de modificación y eliminación de productos para:",
               "id": 1709755266261,
               "level": "default",
-              "done": false,
-              "start": 1709755266261
+              "done": true,
+              "start": 1709755266261,
+              "focus": false,
+              "end": 1712283774720
             }
           },
           {
@@ -290,8 +294,10 @@
                   "content": "Si es admin, solo permitir modificar, agregar o eliminar cualquier producto",
                   "id": 1709943199078,
                   "level": "default",
-                  "done": false,
-                  "start": 1709943199078
+                  "done": true,
+                  "start": 1709943199078,
+                  "focus": false,
+                  "end": 1712283777056
                 }
               },
               {
@@ -317,8 +323,10 @@
                       "content": "Eliminar los que él creó.",
                       "id": 1709943546186,
                       "level": "default",
-                      "done": false,
-                      "start": 1709943546186
+                      "done": true,
+                      "start": 1709943546186,
+                      "focus": false,
+                      "end": 1712283779103
                     }
                   }
                 ],
@@ -326,8 +334,10 @@
                   "content": "Si es premium puede:",
                   "id": 1709943207220,
                   "level": "default",
-                  "done": false,
-                  "start": 1709943207220
+                  "done": true,
+                  "start": 1709943207220,
+                  "focus": false,
+                  "end": 1712283778209
                 }
               },
               {
@@ -361,8 +371,10 @@
               "content": "Permisos de roles",
               "id": 1709943152296,
               "level": "default",
-              "done": false,
-              "start": 1709943152296
+              "done": true,
+              "start": 1709943152296,
+              "focus": false,
+              "end": 1712283783521
             }
           },
           {
@@ -453,7 +465,8 @@
       1709943152297,
       1709943207220,
       1710099642510,
-      1709754966232
+      1709754966232,
+      1705071659610
     ],
     "schema": "https://github.com/Saber2pr/vsc-ext-todolist/blob/master/src/api/type.ts#L3",
     "add_mode": "bottom",
@@ -466,6 +479,6 @@
     "showEndTime": false,
     "simpleMode": false,
     "lang": "es",
-    "version": "1712006924431"
+    "version": "1712343107444"
   }
 }
