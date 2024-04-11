@@ -42,7 +42,11 @@ router.get('/profile', (req, res) => {
 })
 router.get('/ticket', (req, res) => {
     res.render('ticket')
+});
+router.get('/solicitudEmail', (req, res) =>{
+    res.render('solicitudEmail')
+});
+router.get('/resetPass', (req, res) =>{
+    res.render('resetPassword')
 })
-
-
 export default router;

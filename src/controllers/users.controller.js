@@ -4,8 +4,9 @@ import Controllers from "./class.controller.js";
 import usersServices from '../services/users/users.service.js';
 
 import { generateToken } from "../jwt/auth.js";
-
 import logger from '../utils/logger/logger.winston.js'
+import httpResponse from "../utils/http.response.js";
+
 
 class UserController extends Controllers {
     constructor() {
@@ -22,7 +23,7 @@ class UserController extends Controllers {
             logger.error('Entró al catch en users.controller de register' + error)
             next(error);
         }
-    }
+    };
     loginResponse = async (req, res, next) => {
         try {
             const id = req.session.passport.user;
@@ -51,7 +52,7 @@ class UserController extends Controllers {
             logger.error('Entró al catch en users.controller de loginResponse' + error)
             next(error)
         }
-    }
+    };
     logout = async (req, res, next) => {
         try {
             const userId = req.session.passport.user._id
@@ -85,6 +86,59 @@ class UserController extends Controllers {
             next(error)
         }
     };
+    solicitudResetPass = async (req, res, next) =>{
+        try {
+            const data = req.body.email
+            console.log('email recibido: ', data)
+            const response = await usersServices.solicitudResetPass(data);
+            console.log('respuesta: ' + response)
+            if(!response) {
+                return httpResponse.NotFound
+            } else {
+                return httpResponse.Ok(res, response)
+            }
+        } catch (error) {
+            logger.error('Entró al catch en users.controller de resetPass' + error)
+            next(error)
+        }
+    }
+    verifyToken = async (req, res, next) =>{
+        try {
+            const token = req.body.token
+            console.log('token desde front: ', token);
+            const isValidToken = await usersServices.verifyToken(token);
+            if (!isValidToken) {
+                return httpResponse.Unauthorized(res,"Invalid or expired Token")
+            }else{
+                return httpResponse.Ok(res,'Token Validated')
+            }
+        } catch (error) {
+            logger.error('Entró al catch en users.controller de verifyToken' + error)
+            next(error)
+        }
+    }
+    newPass = async (req, res, next) =>{
+        try {
+            const newPass = req.body.password
+            const token = req.body.token
+            const isValidToken = await usersServices.verifyToken(token)
+            if(!isValidToken){
+                return httpResponse.Unauthorized(res,"Invalid or expired Token")
+            } else {
+                const userEmail = isValidToken.email;
+                const passOk = await usersServices.newPass(newPass, userEmail)
+                console.log('respuesta del service: ', passOk)
+                if(!passOk){
+                    return httpResponse.Forbidden(res,"Error updating password")
+                } else {
+                    return httpResponse.Ok(res, "Password updated successfully!")
+                }
+            }
+        } catch (error) {
+            logger.error('Entró al catch en users.controller de newPass' + error)
+            next(error)
+        }
+    }
 }
 
 const userController = new UserController();

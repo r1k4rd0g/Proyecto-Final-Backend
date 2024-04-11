@@ -1,23 +1,23 @@
-{{!< main}}
-<h1>Bienvenido..</h1>
-<h2>LOGIN</h2>
-<form id="formLogin" action="/api/users/login" method="post">
-    Email:
-    <input type="email" name="email" id="email" />
-    Password:
-    <input type="password" name="password" id="password" />
-    <input type="submit" value="LOGIN" />
-</form><br>
-<form action="/api/users/github-login" method="post">
-    <button type="submit">Login con Github</button>
-</form>
+{{!< main}} <h1>Bienvenido..</h1>
+    <h2>LOGIN</h2>
+    <form id="formLogin" action="/api/users/login" method="post">
+        Email:
+        <input type="email" name="email" id="email" />
+        Password:
+        <input type="password" name="password" id="password" />
+        <input type="submit" value="LOGIN" />
+    </form><br>
+    <form action="/api/users/github-login" method="post">
+        <button type="submit">Login con Github</button>
+    </form>
 
-<h3>¿USUARIO NUEVO?</h3>
-<button onclick="location.href='register'">Registro Manual</button>
-<div>
-    <button onclick="location.href='/api/users/github-register'">Registro con Github</button>
-</div>
-<h4>¿Olvidó su contraseña?</h4>
-<button onclick="location.href='register'">Reset Password</button> --! esto me tiene que mandar un mail, tiene que llamar a la función no generada aún, de reseteo de contraseña
+    <h3>¿USUARIO NUEVO?</h3>
+    <button onclick="location.href='register'">Registro Manual</button>
+    <div>
+        <button onclick="location.href='/api/users/github-register'">Registro con Github</button>
+    </div>
+    <h4>¿Olvidó su contraseña?</h4>
+    <button id="resetPass">Reset Password</button>
 
-<script src="login.js" charset="utf-8"></script>
+    <script src="login.js" charset="utf-8"></script>
+    <script src="solicitudEmail.js" charset="utf-8"></script>

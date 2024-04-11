@@ -1,7 +1,8 @@
 import jwt from 'jsonwebtoken';
 import logger from '../utils/logger/logger.winston.js'
+import config from '../config/config.js'
 
-const SECRET_KEY_JWT = process.env.SECRET_KEY_JWT;
+const SECRET_KEY_JWT = config.SECRET_KEY_JWT
 
 export const generateToken = (user) => {
     try {

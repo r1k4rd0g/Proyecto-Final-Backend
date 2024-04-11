@@ -44,8 +44,9 @@ export default class MongoDao {
 
     async update (id, obj) {
         try {
+            //console.log ( 'lo que llega de servicio', id , ' ', obj )
             const response= await this.model.updateOne({_id: id}, obj);
-            logger.info('respuesta de update dao: ', + response) //actualiza una solo.
+            //logger.info('respuesta de update dao: ', + response) //actualiza una solo.
             return response
         } catch (error) {
             logger.error('entró en el catch mongodb - mongo.dao - update: ' + error)

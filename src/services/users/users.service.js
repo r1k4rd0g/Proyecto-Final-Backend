@@ -4,9 +4,13 @@ import Services from '../class.services.js'
 import persistence from '../../persistence/daos/factory.js';
 
 //importamos utils:
-import { createHash, isValidPass } from "../../utils.js";
+import { createHash, isValidPass, generateResetPassLink } from "../../utils.js";
 import { errorsDictionary } from '../../utils/errors.dictionary.js';
 import logger from '../../utils/logger/logger.winston.js'
+
+import jwt from 'jsonwebtoken';
+import config from '../../config/config.js';
+import mailSender from './mailing.service.js';
 
 
 
@@ -97,6 +101,71 @@ class UserService extends Services {
             }
         } catch (error) {
             logger.error('entró en el catch - users.service - logout: ' + error)
+            throw new Error (error.message, errorsDictionary.ERROR_DEFAULT);
+        }
+    }
+    solicitudResetPass = async (data) =>{
+        try {
+            console.log('viene de controller: ', data);
+            const user = await this.dao.searchByEmail(data);
+            const email = user.email
+            console.log('email: ', email);
+            if (!user) {
+                return false;
+            } else {
+                const token = jwt.sign(
+                    {email},
+                    config.SECRET_KEY_JWT,
+                    { expiresIn: "1h"},
+                    //{ expiresIn: "5m"}
+                )
+                const resetLink = `http://localhost:8088/resetPass?token=${token}`
+                const response = await mailSender.sendResetPass(user.email, resetLink);
+                console.log('respuesta servicio: ', response)
+                return true;
+            }
+        } catch (error) {
+            logger.error('entró en el catch - users.service - resetPass: ' + error)
+            throw new Error (error.message, errorsDictionary.ERROR_DEFAULT);
+        }
+    }
+    verifyToken = async (token) =>{
+        try {
+            const tokenToValidate = token
+            console.log('token desde controller: ' ,tokenToValidate)
+            const decodedToken = jwt.verify(tokenToValidate, config.SECRET_KEY_JWT)
+            console.log("decodificado", decodedToken)
+            if (!decodedToken) {
+                return false
+            } else {
+                return decodedToken
+            }
+        } catch (error) {
+            logger.error('entró en el catch - users.service - verifyToken: ' + error)
+            throw new Error (error.message, errorsDictionary.ERROR_DEFAULT);
+        }
+    }
+    newPass = async (newPass, userEmail) =>{
+        try {
+            const password = newPass
+            console.log('lo que llega de controller; ', newPass, ' ', userEmail  )
+            const user = await this.dao.searchByEmail(userEmail);
+            console.log('usuario encontrado: ', user)
+            if (user) {
+                const passValid = isValidPass(password, user);
+                console.log(passValid)
+                if (!passValid) {
+                    const hashedPass = createHash(password);
+                    const id = user._id
+                    const update = await this.dao.update(id, {'password':hashedPass})
+                    console.log( 'respuesta del dao, update: ', update)
+                    return update
+                } else {
+                    return false
+                }
+            }
+        } catch (error) {
+            logger.error('entró en el catch - users.service - newPass: ' + error)
             throw new Error (error.message, errorsDictionary.ERROR_DEFAULT);
         }
     }

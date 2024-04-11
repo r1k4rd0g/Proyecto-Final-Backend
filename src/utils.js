@@ -21,6 +21,7 @@ export const createHash = (password) =>{
  * @returns retorna un booleano, true o false
  */
 export const isValidPass = (password, user)=>{
+    console.log('datos que llegan al isValidPass: ', password, user)
     return compareSync(password, user.password) //toma el password que no está haseado y lo compara con el pass que está en la base de datos de ese usuario.
 }
 
@@ -49,4 +50,10 @@ export const mongoStoreOptions ={
         secure: false,
         httpOnly: true
     }
+}
+/** función para generar un link de reseteo */
+export function generateResetPassLink(req){
+    const protocol = req.protocol;
+    const host = req.get('host');
+    return `${protocol}://${host}`
 }

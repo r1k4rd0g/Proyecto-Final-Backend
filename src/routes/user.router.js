@@ -40,7 +40,10 @@ export default router;
 router.put('/premium/:id', verifyToken, userController.update)
 
 //ruta para solicitar nueva contraseña
-//router.post('/reset-pass', userController.resetPass)
+router.post('/reset-pass', userController.solicitudResetPass)
+
+//verificar el token para cambiar el pass
+router.post('/verifyToken', userController.verifyToken)
 
 //ruta para actualizar contraseña
-//router.put('/new-pass', userController.newPass)
+router.put('/new-pass', userController.newPass)

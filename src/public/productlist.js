@@ -107,7 +107,7 @@ const existFilter = document.getElementById('existFilter');
 const priceMin = document.getElementById('priceMin');
 const priceMax = document.getElementById('priceMax');
 
-async function fetchData(page, limit, category, exist, priceMinValue, priceMaxValue) {
+/*async function fetchData(page, limit, category, exist, priceMinValue, priceMaxValue) {
     // Realizar una solicitud al backend con los parámetros necesarios
     const response = await fetch(`/api/products?page=${page}&limit=${limit}&category=${category}&exist=${exist}&priceMin=${priceMinValue}&priceMax=${priceMaxValue}`);
     const data = await response.json();
@@ -152,4 +152,4 @@ priceMin.addEventListener('change', updateProductList);
 priceMax.addEventListener('change', updateProductList);
 
 // Cargar la lista de productos al cargar la página
-updateProductList();
+updateProductList();*/
