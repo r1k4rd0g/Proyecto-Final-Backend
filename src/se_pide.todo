@@ -523,8 +523,10 @@
                   "content": "se debe de mandar un email para notificarles",
                   "id": 1712877935796,
                   "level": "default",
-                  "done": false,
-                  "start": 1712877935796
+                  "done": true,
+                  "start": 1712877935796,
+                  "focus": false,
+                  "end": 1712887871172
                 }
               }
             ],
@@ -597,6 +599,6 @@
     "showEndTime": false,
     "simpleMode": false,
     "lang": "es",
-    "version": "1712885732484"
+    "version": "1712887871249"
   }
 }

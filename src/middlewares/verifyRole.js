@@ -4,30 +4,31 @@ import httpResponse from "../utils/http.response.js"
 import { errorsDictionary } from "../utils/errors.dictionary.js"
 import logger from '../utils/logger/logger.winston.js'
 
-export const verifyAdmin = (req, res, next)=>{
+export const verifyAdmin = (req, res, next) => {
     try {
         const user = req.session.passport.user
-        logger.info('rol de verifyAdmin' + user)
+        logger.info('rol de verifyAdmin' + JSON.stringify(user))
         const role = user.role
-        logger.info(role)
-    if (role === 'admin'){
-        next()
-    } else
-        logger.info('no hay autorización para seguir, debido a tu rol')
-        return httpResponse.Unauthorized(res, errorsDictionary.ERROR_VERIFY_ROLE);
+        logger.info('role transformado: ' + role)
+        if (role === 'admin') {
+            next();
+        } else {
+            logger.info('no hay autorización para seguir, debido a tu rol')
+            return httpResponse.Unauthorized(res, errorsDictionary.ERROR_VERIFY_ROLE);
+        }
     } catch (error) {
         logger.error('entró en el catch de verifyRole - verifyAdmin')
         throw new Error(errorsDictionary.ERROR_CATCH)
     }
 }
 
-export const verifyUser = (req, res, next)=>{
+export const verifyUser = (req, res, next) => {
     try {
-        const {role} = req.session.passport.user
-    if (role === 'usuario'){
-        next()
-    } else
-        logger.info('no hay autorización para seguir, debido a tu rol')
+        const { role } = req.session.passport.user
+        if (role === 'usuario') {
+            next()
+        } else
+            logger.info('no hay autorización para seguir, debido a tu rol')
         return httpResponse.Unauthorized(res, errorsDictionary.ERROR_VERIFY_ROLE);
     } catch (error) {
         logger.error('entró en el catch de verifyRole - verifyUser')

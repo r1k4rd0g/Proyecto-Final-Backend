@@ -33,7 +33,7 @@ const login = async (req, email, password, done) => {
         //console.log('consola local strategy - login que lee user:', user);
         const userLogin = await usersServices.login(user);
         if (!userLogin) return done(null, false, { message: 'User not found' });
-        //console.log('Login de local strategy', userLogin);
+        console.log('Login de local strategy', userLogin);
         return done(null, userLogin);
     } catch (error) {
         logger.error('Entró en catch de local-strategy -> login' + error);

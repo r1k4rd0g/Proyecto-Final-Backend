@@ -33,7 +33,7 @@ class UserController extends Controllers {
             const { email, password } = userOk;
             const token = generateToken(userOk);
             //console.log('token generado en loginResponse userController',token, typeof token);
-            //console.log('usuario ok?', userOk);
+            console.log('usuario ok?', userOk);
             if (userOk) {
                 req.session.passport.user = userOk;
                 req.session.passport.email = email;

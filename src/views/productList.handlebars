@@ -13,9 +13,9 @@
         <form class="form" action="/api/product" method="post">
             <button id="workWProduct">Work with product</button>
         </form>
-        <div id="botonAdmin" style="display: none;">
-            <form class="form" action="/api/users/logout" method="post">
-                <button type="submit">Solo Admin</button>
+        <div>
+            <form class="form" >
+                <button id="botonAdmin" type="submit">Solo Admin</button>
             </form>
         </div>
         <form class="form" action="/api/users/logout" method="post">
@@ -31,7 +31,7 @@
     </div>
     <div class="botonBox">
         <input type="number" id="pageNumber" value="1" min="1">
-        <input type="number" id="limit" value="" >
+        <input type="number" id="limit" value="">
         <input type="text" id="categoryFilter" placeholder="Filtrar por categoría">
         <input type="checkbox" id="existFilter" value="yes"> Stock?
         <input type="number" id="priceMin" placeholder="Precio mínimo">

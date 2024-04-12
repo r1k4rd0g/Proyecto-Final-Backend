@@ -1,6 +1,7 @@
 
 const profile = document.getElementById("perfil");
 const workWProduct = document.getElementById("workWProduct");
+const botonAdmin = document.getElementById('botonAdmin');
 const crearTicket = document.getElementById('crearTicket')
 const cartId = document.getElementById('cartId').getAttribute('data-cart-id');
 
@@ -38,6 +39,30 @@ document.addEventListener("DOMContentLoaded", function () {
 workWProduct.onclick = (e) => {
     e.preventDefault();
     window.location.href = "/realtimeproducts";
+};
+botonAdmin.onclick = async (e) => {
+    e.preventDefault();
+    const token = localStorage.getItem('token');
+
+    try {
+        const response = await fetch('/api/sessions/isAdmin', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            }
+        });
+        console.log('respuesta del back: ', response)
+        if (response.status === 200) {
+            window.location.href = "/soloAdmin";
+        } else {
+            alert('No tienes los permisos para ingresar a esta sección')
+        }
+    } catch (error) {
+        console.log('error: ', error)
+        alert('Ocurrió un error  al verificar si eres administrador');
+    }
+
 };
 
 
