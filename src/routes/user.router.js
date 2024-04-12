@@ -7,7 +7,7 @@ import { verifyToken } from "../middlewares/verifyToken.js";
 
 const router = Router();
 
-
+router.get('/allUsers', verifyAdmin, userController.getAllUsers); // Get all users as admin with DTO
 
 router.get('/productlist', (req, res) => {
     res.render('productlist', { user: req.session.passport.user });
@@ -47,3 +47,6 @@ router.post('/verifyToken', userController.verifyToken)
 
 //ruta para actualizar contraseña
 router.put('/new-pass', userController.newPass)
+
+//borra los usuarios con un tiempo de inactividad
+router.delete('/deleteUsers', verifyAdmin, userController.deleteUsers)

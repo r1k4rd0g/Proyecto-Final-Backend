@@ -108,8 +108,10 @@
                           "content": "si expria, debe redirigir a una vista que le permita generar nuevamente el mail, el cual tendrá otro link que expirará en 1 hora",
                           "id": 1709755059583,
                           "level": "default",
-                          "done": false,
-                          "start": 1709755059583
+                          "done": true,
+                          "start": 1709755059583,
+                          "focus": false,
+                          "end": 1712875504749
                         }
                       }
                     ],
@@ -117,8 +119,10 @@
                       "content": "el link del mail expirará en 1 hora",
                       "id": 1709755009104,
                       "level": "default",
-                      "done": false,
-                      "start": 1709755009104
+                      "done": true,
+                      "start": 1709755009104,
+                      "focus": false,
+                      "end": 1712875503875
                     }
                   },
                   {
@@ -128,8 +132,10 @@
                       "content": "si se escribe la misma contraseña, se debe impedir e indicar que no se puede colocar la misma",
                       "id": 1709755021120,
                       "level": "default",
-                      "done": false,
-                      "start": 1709755021120
+                      "done": true,
+                      "start": 1709755021120,
+                      "focus": false,
+                      "end": 1712875505431
                     }
                   }
                 ],
@@ -137,8 +143,10 @@
                   "content": "se debe enviar por mail, y redericcione a una pagina para re establecer la contraseña",
                   "id": 1709754983052,
                   "level": "default",
-                  "done": false,
-                  "start": 1709754983052
+                  "done": true,
+                  "start": 1709754983052,
+                  "focus": false,
+                  "end": 1712875502843
                 }
               }
             ],
@@ -146,8 +154,10 @@
               "content": "Sistema de recuperación de contraseña",
               "id": 1709754966232,
               "level": "default",
-              "done": false,
-              "start": 1709754966232
+              "done": true,
+              "start": 1709754966232,
+              "focus": false,
+              "end": 1712875506151
             }
           },
           {
@@ -478,6 +488,76 @@
               "focus": false,
               "end": 1712772660603
             }
+          },
+          {
+            "key": 1712877838205,
+            "children": [],
+            "todo": {
+              "content": "Crear una ruta Get que devuelva todos los usuarios, pero solo con los datos nombre, correo y tipo de cuenta",
+              "id": 1712877838205,
+              "level": "default",
+              "done": true,
+              "start": 1712877838205,
+              "focus": false,
+              "end": 1712885732407
+            }
+          },
+          {
+            "key": 1712877874052,
+            "children": [
+              {
+                "key": 1712877920531,
+                "children": [],
+                "todo": {
+                  "content": "tiempo de innactividad mayor a 2 días",
+                  "id": 1712877920531,
+                  "level": "default",
+                  "done": false,
+                  "start": 1712877920531
+                }
+              },
+              {
+                "key": 1712877935796,
+                "children": [],
+                "todo": {
+                  "content": "se debe de mandar un email para notificarles",
+                  "id": 1712877935796,
+                  "level": "default",
+                  "done": false,
+                  "start": 1712877935796
+                }
+              }
+            ],
+            "todo": {
+              "content": "Crear una ruta Delete, que elimine usuarios",
+              "id": 1712877874052,
+              "level": "default",
+              "done": false,
+              "start": 1712877874052
+            }
+          },
+          {
+            "key": 1712878026203,
+            "children": [
+              {
+                "key": 1712878043023,
+                "children": [],
+                "todo": {
+                  "content": "se debe de enviar un email, avisando",
+                  "id": 1712878043023,
+                  "level": "default",
+                  "done": false,
+                  "start": 1712878043023
+                }
+              }
+            ],
+            "todo": {
+              "content": "Notificar que un producto eliminado perteneciente a un usuario premium",
+              "id": 1712878026203,
+              "level": "default",
+              "done": false,
+              "start": 1712878026203
+            }
           }
         ],
         "todo": {
@@ -502,8 +582,9 @@
       1709755375297,
       1709943207220,
       1710099642510,
-      1709754966232,
-      1705071659610
+      1705071659610,
+      1712877874052,
+      1712878026203
     ],
     "schema": "https://github.com/Saber2pr/vsc-ext-todolist/blob/master/src/api/type.ts#L3",
     "add_mode": "bottom",
@@ -516,6 +597,6 @@
     "showEndTime": false,
     "simpleMode": false,
     "lang": "es",
-    "version": "1712772663939"
+    "version": "1712885732484"
   }
 }

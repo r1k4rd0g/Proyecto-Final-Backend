@@ -57,9 +57,28 @@ class MailSender {
             };
             const mailSend = await transport.sendMail(message);
             logger.info ('Email enviado: ' + mailSend)
-            return mailSend
+            return mailSend;
         } catch (error) {
             logger.error('entró en el catch - mailing.service - sendResetPass: ' + error)
+            throw new Error(error.message, errorsDictionary.ERROR_TO_CREATE)
+        }
+    }
+    userDelete = async (user)=>{
+        try {
+            const email = user.email;
+            const nombre = user.first_name;
+            const apellido = user.last_name;
+            const message = {
+                from: config.EMAIL,
+                to: email,
+                subject: 'Cuenta eliminada',
+                text: `Estimado/a ${nombre} ${apellido}, Debito a tu tiempo de inactividad, tu cuenta con el correo ${email}, fue eliminada. Muchas gracias.`
+            };
+            const mailSend = await transport.sendMail(message);
+            logger.info ('Email enviado: ' + mailSend)
+            return mailSend;
+        } catch (error) {
+            logger.error('entró en el catch - mailing.service - userDelete: ' + error)
             throw new Error(error.message, errorsDictionary.ERROR_TO_CREATE)
         }
     }

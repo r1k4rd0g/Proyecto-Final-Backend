@@ -38,10 +38,6 @@ class UserController extends Controllers {
                 req.session.passport.user = userOk;
                 req.session.passport.email = email;
                 req.session.passport.password = password;
-                //console.log('console req.session', userOk)
-                //console.log('console req.session.user:', req.session.passport.user)
-                //console.log('console req.session.email:', req.session.passport.user.email)
-                //console.log('console req.session.password:', req.session.passport.user.password)
                 res
                     .header('Authorization', token)//acá dejo establecido el token en el header
                     .cookie('token', token, { httpOnly: true })// acá dejo establecido el token en una cookie
@@ -86,13 +82,13 @@ class UserController extends Controllers {
             next(error)
         }
     };
-    solicitudResetPass = async (req, res, next) =>{
+    solicitudResetPass = async (req, res, next) => {
         try {
             const data = req.body.email
             console.log('email recibido: ', data)
             const response = await usersServices.solicitudResetPass(data);
             console.log('respuesta: ' + response)
-            if(!response) {
+            if (!response) {
                 return httpResponse.NotFound
             } else {
                 return httpResponse.Ok(res, response)
@@ -102,40 +98,68 @@ class UserController extends Controllers {
             next(error)
         }
     }
-    verifyToken = async (req, res, next) =>{
+    verifyToken = async (req, res, next) => {
         try {
             const token = req.body.token
             console.log('token desde front: ', token);
             const isValidToken = await usersServices.verifyToken(token);
             if (!isValidToken) {
-                return httpResponse.Unauthorized(res,"Invalid or expired Token")
-            }else{
-                return httpResponse.Ok(res,'Token Validated')
+                return httpResponse.Unauthorized(res, "Invalid or expired Token")
+            } else {
+                return httpResponse.Ok(res, 'Token Validated')
             }
         } catch (error) {
             logger.error('Entró al catch en users.controller de verifyToken' + error)
             next(error)
         }
     }
-    newPass = async (req, res, next) =>{
+    newPass = async (req, res, next) => {
         try {
             const newPass = req.body.password
             const token = req.body.token
             const isValidToken = await usersServices.verifyToken(token)
-            if(!isValidToken){
-                return httpResponse.Unauthorized(res,"Invalid or expired Token")
+            if (!isValidToken) {
+                return httpResponse.Unauthorized(res, "Invalid or expired Token")
             } else {
                 const userEmail = isValidToken.email;
                 const passOk = await usersServices.newPass(newPass, userEmail)
                 console.log('respuesta del service: ', passOk)
-                if(!passOk){
-                    return httpResponse.Forbidden(res,"Error updating password")
+                if (!passOk) {
+                    return httpResponse.Forbidden(res, "Error updating password")
                 } else {
                     return httpResponse.Ok(res, "Password updated successfully!")
                 }
             }
         } catch (error) {
             logger.error('Entró al catch en users.controller de newPass' + error)
+            next(error)
+        }
+    }
+
+    getAllUsers = async (req, res, next) => {
+        try {
+            const users = await usersServices.getAllUsers();
+            if (!users) {
+                return httpResponse.NotFound(res, 'No hay usuarios registrados');
+            } else {
+                return httpResponse.Ok(res, users)
+            }
+        } catch (error) {
+            logger.error('Entró al catch en users.controller de getAllUsers' + error)
+            next(error)
+        }
+    }
+    deleteUsers = async (req, res, next) =>{
+        try {
+            const users = await usersServices.getAll();
+            if (!users) {
+                return httpResponse.NotFound(res, 'No hay usuarios registrados');
+            } else {
+                const usersToDelete = await usersServices.removeUsers(users)
+                return httpResponse.Ok(res, usersToDelete)
+            }
+        } catch (error) {
+            logger.error('Entró al catch en users.controller de deleteUsers' + error)
             next(error)
         }
     }
