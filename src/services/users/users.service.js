@@ -192,7 +192,7 @@ class UserService extends Services {
                     const lastConnection = new Date (user.last_connection)
                     const now = new Date();
                     const diffTime = Math.abs(now-lastConnection)/36e5;
-                    return   diffTime > 12;
+                    return   diffTime > 48;
                 }
                 return false;
             });
@@ -200,6 +200,7 @@ class UserService extends Services {
                 await this.dao.delete(user._id);
                 await mailSender.userDelete(user)
             }
+            //logger.info('usersToDelete de users.services: ' + usersToDelete)
             return usersToDelete
         } catch (error) {
             logger.error('entró en el catch - users.service - removeUsers: ' + error)

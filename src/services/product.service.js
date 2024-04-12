@@ -86,6 +86,7 @@ class ProductService extends Services {
             throw new Error(error.message, errorsDictionary.ERROR_TO_GET);
         }
     };
+    //esta función está siendo utilizada por socket.io
     removeByOwner = async (pId, userId) => {
         try {
             const idUser = userId

@@ -152,11 +152,17 @@ class UserController extends Controllers {
     deleteUsers = async (req, res, next) =>{
         try {
             const users = await usersServices.getAll();
+            //logger.info('respuesta de users en user.controller - deleteUsers: ' + users)
             if (!users) {
                 return httpResponse.NotFound(res, 'No hay usuarios registrados');
             } else {
                 const usersToDelete = await usersServices.removeUsers(users)
-                return httpResponse.Ok(res, usersToDelete)
+                logger.info('respuesta de usersToDelete en user.Controller - deleteUsers: ' + usersToDelete)
+                if (usersToDelete.length === 0){
+                    return httpResponse.NotFound(res, 'No queda usuarios por eliminar con la condición programada')
+                } else {
+                    return httpResponse.Ok(res, usersToDelete)
+                }
             }
         } catch (error) {
             logger.error('Entró al catch en users.controller de deleteUsers' + error)

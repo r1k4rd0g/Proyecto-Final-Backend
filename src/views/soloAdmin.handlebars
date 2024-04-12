@@ -6,5 +6,23 @@
         <form class="form" action="/api/users/logout" method="post">
             <button type="submit">Cerrar sesión</button>
         </form>
+        <button id="getAllUsers">Obtener todos los usuarios</button>
+        <button id="deleteAllUsers">Eliminar todos los usuarios</button>
+    </div>
+        <div id="responseContainer"></div>
+    <div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Apellido</th>
+                    <th>Email</th>
+                    <th>Rol</th>
+                </tr>
+            </thead>
+            <tbody id="userTableBody"></tbody>
+        </table>
+    </div>
     </div>
     <script src="utils.js"></script>
+    <script src="soloAdmin.js"></script>
