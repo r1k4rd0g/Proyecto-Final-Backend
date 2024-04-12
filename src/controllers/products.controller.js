@@ -109,7 +109,7 @@ class ProductController extends Controllers {
                 }
             })
             const userLog = req.session.passport.user
-            logger.info('userLog de products controller' + JSON.stringify(userLog))
+            //logger.info('userLog de products controller' + JSON.stringify(userLog))
             res.render('productlist', { products: productsDetail, user: userLog })
             //res.json({ products: productsDetail, user: userLog })
         } catch (error) {

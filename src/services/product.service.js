@@ -8,6 +8,7 @@ import { generateProducts } from '../utils/faker/products.faker.js';
 
 import logger from '../utils/logger/logger.winston.js'
 import fs from 'fs'
+import mailSender from './users/mailing.service.js';
 
 
 
@@ -90,20 +91,35 @@ class ProductService extends Services {
     removeByOwner = async (pId, userId) => {
         try {
             const idUser = userId
-            console.log('user id: ', idUser)
             logger.info('datos que llegan desde socket: ' + pId + ' ' + userId)
             const user = await this.userDao.getById(idUser);
-            console.log('usuario encontrado: ',  user)
+            console.log('usuario encontrado: ', user)
             if (!user) {
                 return false
             }
             const roleUser = user.role
             const productSearch = await this.dao.getById(pId);
-            if(!productSearch) return false
+            logger.info('producto encontrado en product.service removeByOwner: ' + productSearch)
+            if (!productSearch) return false
             const owner = productSearch.owner
             console.log('owner del producto: ', owner)
-            if (roleUser === 'admin' || owner === userId) {
+            if (roleUser === 'admin') {
+                if (owner !== 'admin') {
+                    const productDelete = await this.dao.delete(pId)
+                    const userOwner = await this.userDao.getById(owner)
+                    const emailOwner = userOwner.email
+                    await mailSender.deleteProd(productSearch, user, emailOwner)
+                    return productDelete
+                } else {
+                    const productDelete = await this.dao.delete(pId)
+                    const emailOwner = user.email
+                    await mailSender.deleteProd(productSearch, user, emailOwner)
+                    return productDelete
+                }
+            } else if (owner === userId) {
                 const productDelete = await this.dao.delete(pId)
+                const emailOwner = user.email
+                await mailSender.deleteProd(productSearch, user, emailOwner)
                 return productDelete
             }
             else {

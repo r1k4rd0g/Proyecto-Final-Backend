@@ -53,7 +53,7 @@ class MailSender {
                 from: config.EMAIL,
                 to: email,
                 subject: 'Restablecer Contraseña',
-                text: `Haz click en este enlace para restablecer tu contraseña: ${resetLink}`
+                html: `Haz click en este enlace para restablecer tu contraseña: ${resetLink}`
             };
             const mailSend = await transport.sendMail(message);
             logger.info ('Email enviado: ' + mailSend)
@@ -72,13 +72,32 @@ class MailSender {
                 from: config.EMAIL,
                 to: email,
                 subject: 'Cuenta eliminada',
-                text: `Estimado/a ${nombre} ${apellido}, Debito a tu tiempo de inactividad, tu cuenta con el correo ${email}, fue eliminada. Muchas gracias.`
+                html: `Estimado/a ${nombre} ${apellido}, Debito a tu tiempo de inactividad, tu cuenta con el correo ${email}, fue eliminada. Muchas gracias.`
             };
             const mailSend = await transport.sendMail(message);
             logger.info ('Email enviado: ' + mailSend)
             return mailSend;
         } catch (error) {
             logger.error('entró en el catch - mailing.service - userDelete: ' + error)
+            throw new Error(error.message, errorsDictionary.ERROR_TO_CREATE)
+        }
+    }
+    deleteProd = async (productSearch, user, emailOwner) =>{
+        try {
+            const  howDelete = user.email;
+            const ownerEmail = emailOwner;
+
+            const message={
+                from: config.EMAIL,
+                to: ownerEmail,
+                subject: 'Producto eliminado',
+                html: `<p> El producto que se detalla a continuación: <br> ${productSearch} <br> fue eliminado por ${howDelete}.</p>`
+            }
+            const mailSend = await transport.sendMail(message);
+            logger.info('Email enviado: ' + mailSend)
+            return mailSend;
+        } catch (error) {
+            logger.error('entró en el catch - mailing.service - deleteProd: ' + error)
             throw new Error(error.message, errorsDictionary.ERROR_TO_CREATE)
         }
     }
